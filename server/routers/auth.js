@@ -65,8 +65,8 @@ router.post("/signin", (req, res) => {
     });
 });
 
-router.get("/protected", loginMiddleware,(req, res)=>{
-  res.send("Protected user")
-})
+// router.get("/protected", loginMiddleware,(req, res)=>{
+//   res.send("Protected user")
+// })
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 require("./models/user")
+require("./models/post")
 
 const app = express()
 const {MONGO_URI} = require("./keys")
@@ -9,6 +10,7 @@ const PORT = 5000
 
 app.use(express.json())
 app.use(require("./routers/auth"))
+app.use(require("./routers/post"))
 
 
 
