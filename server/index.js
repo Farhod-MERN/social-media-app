@@ -1,6 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
-// require("./models/user")
+require("./models/user")
 
 const app = express()
 const {MONGO_URI} = require("./keys")
