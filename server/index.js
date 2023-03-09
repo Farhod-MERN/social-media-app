@@ -4,10 +4,12 @@ const PORT = 5000
 const {MONGO_URI} = require("./keys")
 const mongoose = require("mongoose")
 
+require("./models/user")
 
-app.get("/", (req, res)=>{
-    res.send("ura")
-})
+app.use(express.json())
+app.use(require("./routers/auth"))
+
+
 
 mongoose.set('strictQuery', false);
 mongoose.connect(MONGO_URI)
