@@ -5,6 +5,21 @@ const Post = mongoose.model("Post");
 
 const router = Router();
 
+router.get("/allpost" , (req, res)=>{
+  Post.find().populate("postedBy", "_id, name").then(data =>{
+    res.json(data)
+  }).catch(err =>{
+    console.log(err);
+  })
+})
+router.get("/mypost", login, (req, res)=>{
+  Post.find({postedBy: req.user._id}).populate("postedBy", "_id, name").then(data =>{
+    res.json(data)
+  }).catch(err =>{
+    console.log(err);
+  })
+})
+
 router.post("/createpost", login, (req, res) => {
   const { title, body } = req.body;
 
