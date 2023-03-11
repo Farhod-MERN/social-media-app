@@ -1,0 +1,23 @@
+.card .rounded-top {
+  height: 150px;
+}
+.card .d-flex.flex-column {
+  width: 190px;
+}
+.card img {
+  width: 150px;
+  z-index: 1;
+  border-radius: 50%;
+}
+.mb-130 {
+  margin-top: 80px;
+}
+.myEditBtn{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white !important;
+}
+.myEditBtn i{
+    font-size: 28px;
+}
