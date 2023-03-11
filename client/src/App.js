@@ -11,8 +11,8 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <div className="row container mx-auto">
-        <div className="col-md-8 border">
+      {/* <div className="row container mx-auto">
+        <div className="col-md-8 border"> */}
           <Switch>
             <Route exact path="/">
               <Home />
@@ -27,9 +27,9 @@ function App() {
               <Profile />
             </Route>
           </Switch>
-        </div>
+        {/* </div>
         <div className="col-md-4 border">Salom</div>
-      </div>
+      </div> */}
     </BrowserRouter>
   );
 }
