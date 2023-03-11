@@ -4,7 +4,7 @@
 .card .d-flex.flex-column {
   width: 190px;
 }
-.card img {
+.card .img-fluid {
   width: 150px;
   z-index: 1;
   border-radius: 50%;

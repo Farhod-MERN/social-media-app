@@ -37,7 +37,7 @@ export default function Navbar() {
             <span class="nav-link">
               <h4>
                 <Link to="/" className="text-white">
-                  <i class="bi bi-house"></i>
+                <i class="bi bi-house-door-fill"></i>
                 </Link>
               </h4>
             </span>
@@ -58,6 +58,15 @@ export default function Navbar() {
               <h4>
                 <Link to="/add" className="text-white">
                 <i class="bi bi-plus-circle"></i>
+                </Link>
+              </h4>
+            </span>
+          </li>
+          <li class="nav-item me-3 me-lg-1">
+            <span class="nav-link">
+              <h4>
+                <Link to="/chat" className="text-white">
+                <i class="bi bi-chat-dots"></i>
                 </Link>
               </h4>
             </span>

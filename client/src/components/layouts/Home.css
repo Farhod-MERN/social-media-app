@@ -1,0 +1,44 @@
+#story {
+    background-color: #fff;
+    margin: auto;
+    border: 1px solid #dbdbdb;
+    height: 110px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .story {
+    border-radius: 50%;
+  }
+
+  .story-container ul {
+    list-style-type: none;
+    display: flex;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .story-container ul li {
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .story-container ul li .story {
+    padding: 2px;
+    background: linear-gradient(
+      45deg,
+      #f09433 0%,
+      #e6683c 25%,
+      #dc2743 50%,
+      #cc2366 75%,
+      #bc1888 100%
+    );
+  }
+
+  .user-name {
+    font-size: 12px;
+  }
