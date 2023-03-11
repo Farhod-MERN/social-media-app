@@ -56,7 +56,7 @@ export default function Navbar() {
           <li class="nav-item me-3 me-lg-1">
             <span class="nav-link">
               <h4>
-                <Link to="/add" className="text-white">
+                <Link to="/create" className="text-white">
                 <i class="bi bi-plus-circle"></i>
                 </Link>
               </h4>

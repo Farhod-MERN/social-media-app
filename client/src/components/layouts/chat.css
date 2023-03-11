@@ -7,6 +7,7 @@
     position: relative;
     width: 100%;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    color:white;
 }
 .chat-app .people-list {
     width: 280px;
@@ -36,12 +37,13 @@
 }
 
 .people-list .chat-list li:hover {
-    background: #efefef;
-    cursor: pointer
+    background: #5c5757;
+    cursor: pointer;
+    color: black;
 }
 
 .people-list .chat-list li.active {
-    background: #efefef
+    background: #5c5757
 }
 
 .people-list .chat-list li .name {
@@ -123,7 +125,8 @@
     font-size: 16px;
     border-radius: 7px;
     display: inline-block;
-    position: relative
+    position: relative;
+    background: #5c5757 !important;
 }
 
 .chat .chat-history .message:after {
@@ -141,7 +144,7 @@
 }
 
 .chat .chat-history .my-message {
-    background: #efefef
+    background: #5c5757
 }
 
 .chat .chat-history .my-message:after {
@@ -153,7 +156,7 @@
     width: 0;
     position: absolute;
     pointer-events: none;
-    border-bottom-color: #efefef;
+    border-bottom-color: #5c5757;
     border-width: 10px;
     margin-left: -10px
 }

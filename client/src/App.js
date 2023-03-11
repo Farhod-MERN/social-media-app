@@ -6,6 +6,8 @@ import Signup from "./components/layouts/Signup";
 import Signin from "./components/layouts/Signin";
 import Profile from "./components/layouts/Profile";
 import Navbar from "./components/Navbar";
+import Create from "./components/layouts/Create";
+import Chat from "./components/layouts/Chat";
 
 function App() {
   return (
@@ -25,6 +27,12 @@ function App() {
             </Route>
             <Route path="/profile">
               <Profile />
+            </Route>
+            <Route path="/create">
+              <Create />
+            </Route>
+            <Route path="/chat">
+              <Chat />
             </Route>
           </Switch>
         {/* </div>
