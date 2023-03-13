@@ -7,11 +7,18 @@ const app = express()
 const {MONGO_URI} = require("./keys")
 const PORT = 5000
 
+const cors=require("cors");
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions)) // Use this after the variable declaration
 
 app.use(express.json())
 app.use(require("./routers/auth"))
 app.use(require("./routers/post"))
-
 
 
 mongoose.set('strictQuery', false);

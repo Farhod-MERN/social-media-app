@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav class="navbar bg-dark navbar-expand-lg navbar-light bg-light px-lg-5 px-md-5">
-      <div class="container-fluid justify-content-between">
-        <div class="d-flex">
-          <Link to="/" class="navbar-brand me-2 mb-1 d-flex align-items-center">
+    <nav className="navbar bg-dark navbar-expand-lg navbar-light bg-light px-lg-5 px-md-5">
+      <div className="container-fluid justify-content-between">
+        <div className="d-flex">
+          <Link to="/" className="navbar-brand me-2 mb-1 d-flex align-items-center">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Instagram_logo.png/800px-Instagram_logo.png"
               height="40"
@@ -18,62 +18,62 @@ export default function Navbar() {
         </div>
 
         <ul className="navbar-nav flex-row d-none d-md-flex">
-          <form class="input-group w-auto my-auto d-none d-sm-flex">
+          <form className="input-group w-auto my-auto d-none d-sm-flex">
             <input
-              autocomplete="off"
+              autoComplete="off"
               type="search"
-              class="form-control rounded"
+              className="form-control rounded"
               placeholder="Search"
               //   style="min-width: 125px;"
             />
-            <span class="input-group-text border-0 d-none d-lg-flex text-white pointer">
-              <i class="bi bi-search"></i>
+            <span className="input-group-text border-0 d-none d-lg-flex text-white pointer">
+              <i className="bi bi-search"></i>
             </span>
           </form>
         </ul>
 
-        <ul class="navbar-nav flex-row">
-          <li class="nav-item me-3 me-lg-1 active">
-            <span class="nav-link">
+        <ul className="navbar-nav flex-row">
+          <li className="nav-item me-3 me-lg-1 active">
+            <span className="nav-link">
               <h4>
                 <Link to="/" className="text-white">
-                <i class="bi bi-house-door-fill"></i>
+                <i className="bi bi-house"></i>
                 </Link>
               </h4>
             </span>
           </li>
 
-          <li class="nav-item me-3 me-lg-1">
-            <span class="nav-link">
+          <li className="nav-item me-3 me-lg-1">
+            <span className="nav-link">
               <h4>
                 <Link to="/mypost" className="text-white">
-                <i class="bi bi-collection-play"></i>
+                <i className="bi bi-collection-play"></i>
                 </Link>
               </h4>
             </span>
           </li>
 
-          <li class="nav-item me-3 me-lg-1">
-            <span class="nav-link">
+          <li className="nav-item me-3 me-lg-1">
+            <span className="nav-link">
               <h4>
                 <Link to="/create" className="text-white">
-                <i class="bi bi-plus-circle"></i>
+                <i className="bi bi-plus-circle"></i>
                 </Link>
               </h4>
             </span>
           </li>
-          <li class="nav-item me-3 me-lg-1">
-            <span class="nav-link">
+          <li className="nav-item me-3 me-lg-1">
+            <span className="nav-link">
               <h4>
                 <Link to="/chat" className="text-white">
-                <i class="bi bi-chat-dots"></i>
+                <i className="bi bi-chat-dots"></i>
                 </Link>
               </h4>
             </span>
           </li>
-          <li class="nav-item dropdown me-3 me-lg-1">
+          <li className="nav-item dropdown me-3 me-lg-1">
             <Link
-              class="nav-link dropdown-toggle hidden-arrow"
+              className="nav-link dropdown-toggle hidden-arrow"
               to=""
               id="navbarDropdownMenuLink"
               role="button"
@@ -82,14 +82,14 @@ export default function Navbar() {
             >
               <img
                 src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
-                class="rounded-circle"
+                className="rounded-circle"
                 height="25"
                 alt="Black and White Portrait of a Man"
                 loading="lazy"
               />
             </Link>
             <ul
-              class="dropdown-menu dropdown-menu-end"
+              className="dropdown-menu dropdown-menu-end"
               aria-labelledby="navbarDropdownMenuLink"
             >
                <li className="border border-bottom py-1">
