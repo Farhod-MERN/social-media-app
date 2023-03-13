@@ -143,6 +143,15 @@ export default function Chat() {
                       </div>
                     </li>
                     <li className="clearfix">
+                      <div className="message-data text-right">
+                        <span className="message-data-time text-right">10:10 AM, Today</span>
+                        
+                      </div>
+                      <div className="message other-message float-right text-white">
+                        OPPS 😔
+                      </div>
+                    </li>
+                    <li className="clearfix">
                       <div className="message-data">
                         <span className="message-data-time">10:12 AM, Today</span>
                       </div>

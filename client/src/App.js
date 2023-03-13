@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Home from "./components/layouts/Home";
 import Signup from "./components/layouts/Signup";
 import Signin from "./components/layouts/Signin";
@@ -13,6 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
+      <ToastContainer />
       {/* <div className="row container mx-auto">
         <div className="col-md-8 border"> */}
           <Switch>

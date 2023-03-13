@@ -1,24 +1,40 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from "react";
-
+import {toast} from "react-toastify"
+import { useHistory } from 'react-router-dom';
 
 export default function Signup() {
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
+  const history = useHistory()
 
   const postData = ()=>{
+
+    if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){
+     toast.error("Invalid email, ex: example@gmail.com")
+     return
+    }
+
     fetch("http://localhost:5000/signup", {
       method: "post",
       headers:{
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        name: "", email: "", password: ""
+        name: name, email: email, password: password
       })
     }).then(res => res.json())
-    .then(data => {console.log(data)})
+    .then(data => {
+      console.log(data);
+      if(data.error){
+        toast.warning(data.error);
+      }else{
+        toast.success(data.msg);
+        history.push("/signin")
+      }
+    })
   }
 
   return (
@@ -43,7 +59,7 @@ export default function Signup() {
                         id="typeEmailX"
                         className="form-control form-control-lg border border-2"
                       />
-                      <label className="form-label" for="typeEmailX">
+                      <label className="form-label" htmlFor="typeEmailX">
                          <span className="bg-dark px-1">
                          Email
                         </span>
@@ -57,7 +73,7 @@ export default function Signup() {
                         onChange = {(e)=>{setName(e.target.value)}}
                         className="form-control form-control-lg border border-2"
                       />
-                      <label className="form-label" for="typeEmailX">
+                      <label className="form-label" htmlFor="typeEmailX">
                          <span className="bg-dark px-1">
                          Username
                         </span>
@@ -72,7 +88,7 @@ export default function Signup() {
                         onChange = {(e)=>{setPassword(e.target.value)}}
                         className="form-control form-control-lg border border-2"
                       />
-                      <label className="form-label" for="typePasswordX">
+                      <label className="form-label" htmlFor="typePasswordX">
                         <span className="bg-dark px-1"> Password</span>
                       </label>
                     </div>
@@ -82,7 +98,7 @@ export default function Signup() {
                         id="typePasswordX"
                         className="form-control form-control-lg border border-2"
                       />
-                      <label className="form-label" for="typePasswordX">
+                      <label className="form-label" htmlFor="typePasswordX">
                         <span className="bg-dark px-1">Repeat Password</span>
                       </label>
                     </div> */}

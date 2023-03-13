@@ -47,7 +47,7 @@ export default function Navbar() {
             <span className="nav-link">
               <h4>
                 <Link to="/mypost" className="text-white">
-                <i className="bi bi-collection-play"></i>
+                <i class="bi bi-collection"></i>
                 </Link>
               </h4>
             </span>

@@ -22,7 +22,7 @@ export default function Signin() {
                         id="typeEmailX"
                         className="form-control form-control-lg border border-2"
                       />
-                      <label className="form-label" for="typeEmailX">
+                      <label className="form-label" htmlFor="typeEmailX">
                          <span className="bg-dark px-1">
                          Username
                         </span>
@@ -35,7 +35,7 @@ export default function Signin() {
                         id="typePasswordX"
                         className="form-control form-control-lg border border-2"
                       />
-                      <label className="form-label" for="typePasswordX">
+                      <label className="form-label" htmlFor="typePasswordX">
                         <span className="bg-dark px-1"> Password</span>
                       </label>
                     </div>
