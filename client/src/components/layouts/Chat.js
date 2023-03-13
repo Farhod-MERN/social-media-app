@@ -1,5 +1,5 @@
 import React from "react";
-import "./chat.css";
+import "../../css/chat.css";
 
 export default function Chat() {
   return (
@@ -140,15 +140,6 @@ export default function Chat() {
                       </div>
                       <div className="message other-message float-right text-white">
                         Hi Admin, how are you? is this chat working?
-                      </div>
-                    </li>
-                    <li className="clearfix">
-                      <div className="message-data text-right">
-                        <span className="message-data-time text-right">10:10 AM, Today</span>
-                        
-                      </div>
-                      <div className="message other-message float-right text-white">
-                        OPPS 😔
                       </div>
                     </li>
                     <li className="clearfix">

@@ -1,0 +1,25 @@
+
+@media (max-width:600px) {
+    .myMenues{
+        border: 2px solid greenyellow;
+        border-bottom: 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 9999;
+        width: 100% !important;
+        display: flex;
+        justify-content: space-around;
+        margin: 0;
+        padding: 0;
+        border-radius: 20px 20px 0 0;
+    }
+    .dropdown-menu{
+        position: absolute !important;
+        top: -270% !important;
+        z-index: 99;
+    }
+    .myMenues span.nav-link{
+        padding-bottom:0;
+    }
+}

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="navbar bg-dark navbar-expand-lg navbar-light bg-light px-lg-5 px-md-5">
+    <nav className="sticky-top navbar bg-dark navbar-expand-lg navbar-light bg-light px-lg-5 px-md-5">
       <div className="container-fluid justify-content-between">
         <div className="d-flex">
           <Link to="/" className="navbar-brand me-2 mb-1 d-flex align-items-center">
@@ -17,8 +17,8 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <ul className="navbar-nav flex-row d-none d-md-flex">
-          <form className="input-group w-auto my-auto d-none d-sm-flex">
+        <ul className="navbar-nav flex-row  d-lg-flex d-md-flex">
+          <form className="input-group w-auto my-auto  d-sm-flex">
             <input
               autoComplete="off"
               type="search"
@@ -26,13 +26,13 @@ export default function Navbar() {
               placeholder="Search"
               //   style="min-width: 125px;"
             />
-            <span className="input-group-text border-0 d-none d-lg-flex text-white pointer">
+            <span className="input-group-text border-0  d-lg-flex text-white pointer">
               <i className="bi bi-search"></i>
             </span>
           </form>
         </ul>
 
-        <ul className="navbar-nav flex-row">
+        <ul className="navbar-nav flex-row myMenues bg-dark">
           <li className="nav-item me-3 me-lg-1 active">
             <span className="nav-link">
               <h4>
@@ -47,7 +47,7 @@ export default function Navbar() {
             <span className="nav-link">
               <h4>
                 <Link to="/mypost" className="text-white">
-                <i class="bi bi-collection"></i>
+                <i className="bi bi-collection"></i>
                 </Link>
               </h4>
             </span>

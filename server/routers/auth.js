@@ -56,7 +56,7 @@ router.post("/signin", (req, res) => {
           return res.status(422).json({ error: "password is wrong" });
         } else {
           const token = jwt.sign({_id : savedUser._id}, JWT_SECRET, {expiresIn: "30d"})
-          res.json({token: token});
+          res.json({token: token, user: savedUser});
         }
       });
     })
