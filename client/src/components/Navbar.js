@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import {ImHome} from "react-icons/im"
+import {MdExplore ,MdOutlineAddCircle} from "react-icons/md"
+import {RiChatSmile3Fill} from "react-icons/ri"
+import {BsFillSearchHeartFill} from "react-icons/bs"
 export default function Navbar() {
   return (
     <nav className="sticky-top navbar bg-dark navbar-expand-lg navbar-light bg-light px-lg-5 px-md-5">
@@ -27,7 +30,7 @@ export default function Navbar() {
               //   style="min-width: 125px;"
             />
             <span className="input-group-text border-0  d-lg-flex text-white pointer">
-              <i className="bi bi-search"></i>
+              <BsFillSearchHeartFill/>
             </span>
           </form>
         </ul>
@@ -37,7 +40,7 @@ export default function Navbar() {
             <span className="nav-link">
               <h4>
                 <Link to="/" className="text-white">
-                <i className="bi bi-house"></i>
+                  <ImHome/>
                 </Link>
               </h4>
             </span>
@@ -47,7 +50,7 @@ export default function Navbar() {
             <span className="nav-link">
               <h4>
                 <Link to="/mypost" className="text-white">
-                <i className="bi bi-collection"></i>
+                <MdExplore />
                 </Link>
               </h4>
             </span>
@@ -57,7 +60,7 @@ export default function Navbar() {
             <span className="nav-link">
               <h4>
                 <Link to="/create" className="text-white">
-                <i className="bi bi-plus-circle"></i>
+                <MdOutlineAddCircle />
                 </Link>
               </h4>
             </span>
@@ -66,7 +69,7 @@ export default function Navbar() {
             <span className="nav-link">
               <h4>
                 <Link to="/chat" className="text-white">
-                <i className="bi bi-chat-dots"></i>
+                <RiChatSmile3Fill />
                 </Link>
               </h4>
             </span>
@@ -89,7 +92,7 @@ export default function Navbar() {
               />
             </Link>
             <ul
-              className="dropdown-menu dropdown-menu-end"
+              className="dropdown-menu myDropDown dropdown-menu-end"
               aria-labelledby="navbarDropdownMenuLink"
             >
                <li className="border border-bottom py-1">

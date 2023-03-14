@@ -1,17 +1,13 @@
 const {Schema, model} = require("mongoose")
 
 const postSchema = new Schema({
-    title: {
-        type: String,
-        required: true
-    },
-    body: {
+    comment: {
         type: String,
         required: true
     },
     photo: {
         type: String,
-        default: "https://effersaude.com/assets/default-product.png"
+        required: true,
     },
     postedBy: {
         type: Schema.Types.ObjectId,

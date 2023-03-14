@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     const {authorization} = req.headers
 
     if(!authorization){
-        res.status(401).json({error: "Please Sign in"})
+        res.status(401).json({error: "Please Sign in to add post"})
     }
 
     const token = authorization.replace("Farhod ", "")

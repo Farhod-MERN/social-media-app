@@ -20,13 +20,13 @@ router.get("/mypost", login, (req, res)=>{
   })
 })
 
-router.post("/createpost", login, (req, res) => {
-  const { title, body } = req.body;
+router.post("/createpost", login,(req, res) => {
+  const { comment ,photo } = req.body;
 
-  if (!title || !body) {
+  if (!comment || !photo) {
     res.status(422).json({ error: "All fields are required" });
   }
-  const post = Post.create({ title, body, postedBy: req.user }).then(
+  const post = Post.create({ comment:comment, photo:photo, postedBy: req.user }).then(
     (result) => {res.json({post : result})}
   ).catch(err=>{
     console.log(err);

@@ -14,12 +14,12 @@
         padding: 0;
         border-radius: 20px 20px 0 0;
     }
-    .dropdown-menu{
+    .myDropDown{
         position: absolute !important;
         top: -270% !important;
         z-index: 99;
     }
-    .myMenues span.nav-link{
+    .myDropDown .myMenues span.nav-link{
         padding-bottom:0;
     }
 }

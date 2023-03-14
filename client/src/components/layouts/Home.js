@@ -10,8 +10,8 @@ export default function Home() {
           <div className="my-2">
             <div className="row">
               <div className="col-md-12">
-                <section className="story-container border-0 border-bottom" id="story">
-                  <ul>
+                <section className="story-container border-0 border-bottom px-0 mx-0" id="story">
+                  <ul className="px-0">
                     <li>
                       <div className="story">
                         <img
@@ -136,7 +136,7 @@ export default function Home() {
                   </ul>
                 </section>
 
-                <section className="newsfeed my-5">
+                <section className="newsfeed my-5 ">
                   <div className="card">
                     <div className="card-body py-3">
                       <div className="container">

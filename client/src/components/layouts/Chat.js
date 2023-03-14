@@ -110,7 +110,7 @@ export default function Chat() {
               <div className="chat">
                 <div className="chat-header clearfix">
                   <div className="row">
-                    <div className="col-lg-6">
+                    <div className="col-6">
                       <a
                         href="/sa"
                         data-toggle="modal"
@@ -126,7 +126,7 @@ export default function Chat() {
                         <small>Last seen: 2 hours ago</small>
                       </div>
                     </div>
-                    <div className="col-lg-6 d-flex justify-content-end">
+                    <div className="col-6 d-flex justify-content-end">
                     <h3><i className="bi bi-three-dots"></i></h3>
                     </div>
                   </div>

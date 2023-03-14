@@ -1,6 +1,47 @@
-import React from "react";
+import React, { useState} from "react";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 export default function Create() {
+  const [comment, setComment] = useState("");
+  const [image, setImage] = useState("");
+  const [url, setUrl] = useState("");
+  const history = useHistory()
+
+  const postDetails = () => {
+    const data = new FormData();
+    data.append("file", image); // file nomi
+    data.append("upload_preset", "farhodjon"); //
+    data.append("cloud_name", "deusujhz4"); //
+
+    //base url ga image/upload ni qo'shib qo'ydim
+    fetch("https://api.cloudinary.com/v1_1/deusujhz4/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setUrl(data.url)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      fetch("http://localhost:5000/createpost",{
+        method: "post",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({comment: comment, photo:url})
+      }).then(res => res.json()).then(data =>{
+        if(data.error){
+          toast.warning(data.error);
+        }else{
+          toast.success("Added succesfully");
+          history.push("/")
+        }
+      })
+  };
+
   return (
     <div>
       <section className="bg-white">
@@ -14,28 +55,44 @@ export default function Create() {
                       <h5 className="mb-5 text-uppercase text-center">
                         What are you thinking
                       </h5>
-                      <div className="form-outline mb-4 text-white">
+                      <div className="input-group mb-3">
                         <input
                           type="file"
-                          id="form3Example90"
-                          className="form-control form-control-lg border border-2 text-white"
+                          className="form-control outline-0 bg-dark border border-2 text-white"
+                          id="inputGroupFile01"
+                          onChange={(e) => {
+                            setImage(e.target.files[0]);
+                            console.log(e.target.files[0]);
+                          }}
                         />
                       </div>
 
                       <div className="form-outline mb-4 text-white">
                         <textarea
-                        rows={4}
+                          rows={4}
                           type="text"
+                          onChange={(e) => {
+                            setComment(e.target.value);
+                            console.log(e.target.value);
+                          }}
                           id="form3Example9"
+                          defaultValue={comment}
                           className="form-control form-control-lg border border-2 text-white"
-                        >
-
-                        </textarea>
-                        <label className="form-label" for="form3Example9">
-                        <span className="px-3 bg-dark text-white">Comment</span>
+                        ></textarea>
+                        <label className="form-label" htmlFor="form3Example9">
+                          <span className="px-3 bg-dark text-white">
+                            Comment
+                          </span>
                         </label>
                       </div>
-                      <button className="btn btn-outline-secondary text-white">Create</button>
+                      <button
+                        onClick={() => {
+                          postDetails();
+                        }}
+                        className="btn btn-outline-secondary text-white"
+                      >
+                        Create
+                      </button>
                     </div>
                   </div>
                 </div>
