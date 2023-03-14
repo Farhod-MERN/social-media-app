@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {ImHome} from "react-icons/im"
 import {MdExplore ,MdOutlineAddCircle} from "react-icons/md"
 import {RiChatSmile3Fill} from "react-icons/ri"
-import {BsFillSearchHeartFill} from "react-icons/bs"
+import {BsSearchHeart} from "react-icons/bs"
 export default function Navbar() {
   return (
     <nav className="sticky-top navbar bg-dark navbar-expand-lg navbar-light bg-light px-lg-5 px-md-5">
@@ -30,7 +30,7 @@ export default function Navbar() {
               //   style="min-width: 125px;"
             />
             <span className="input-group-text border-0  d-lg-flex text-white pointer">
-              <BsFillSearchHeartFill/>
+              <BsSearchHeart className="mySearchIco"/>
             </span>
           </form>
         </ul>

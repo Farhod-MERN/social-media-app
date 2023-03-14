@@ -68,6 +68,7 @@ export default function Signup() {
                     <div className="form-outline form-white mb-4">
                       <input
                         type="text"
+                        maxLength={14}
                         id="typeEmailX"
                         value={name}
                         onChange = {(e)=>{setName(e.target.value)}}
@@ -114,7 +115,7 @@ export default function Signup() {
                     <p className="mb-0">
                       Already have account{" "}
                       <Link to="/signin" className="text-white-50 fw-bold">
-                        Sign Up
+                        Sign In
                       </Link>
                     </p>
                   </div>

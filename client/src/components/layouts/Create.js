@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
@@ -7,6 +7,27 @@ export default function Create() {
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
   const history = useHistory()
+
+  useEffect(()=>{
+    if(url){
+      fetch("http://localhost:5000/createpost",{
+      method: "post",
+      headers: {
+        "Content-Type":"application/json",
+        "Authorization": "Farhod " + localStorage.getItem("jwt")
+    },
+      body: JSON.stringify({comment: comment, photo:url})
+    }).then(res => res.json()).then(data =>{
+      if(data.error){
+        toast.warning(data.error);
+      }else{
+        toast.success("Added succesfully");
+        history.push("/")
+      }
+    })
+    }
+  },//eslint-disable-next-line
+  [url])
 
   const postDetails = () => {
     const data = new FormData();
@@ -27,19 +48,6 @@ export default function Create() {
       .catch((err) => {
         console.log(err);
       });
-
-      fetch("http://localhost:5000/createpost",{
-        method: "post",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({comment: comment, photo:url})
-      }).then(res => res.json()).then(data =>{
-        if(data.error){
-          toast.warning(data.error);
-        }else{
-          toast.success("Added succesfully");
-          history.push("/")
-        }
-      })
   };
 
   return (
@@ -71,12 +79,11 @@ export default function Create() {
                         <textarea
                           rows={4}
                           type="text"
+                          defaultValue={comment}
                           onChange={(e) => {
                             setComment(e.target.value);
-                            console.log(e.target.value);
                           }}
                           id="form3Example9"
-                          defaultValue={comment}
                           className="form-control form-control-lg border border-2 text-white"
                         ></textarea>
                         <label className="form-label" htmlFor="form3Example9">

@@ -11,7 +11,13 @@
   .story {
     border-radius: 50%;
   }
-
+  .story-container{
+    border: transparent !important;
+    border-bottom: 2px solid rgb(227, 210, 210) !important;
+  }
+  .mySearchIco{
+    transform: scale(1.5);
+  }
   .story-container ul {
     list-style-type: none;
     display: flex;

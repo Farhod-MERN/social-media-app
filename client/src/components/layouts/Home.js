@@ -10,7 +10,7 @@ export default function Home() {
           <div className="my-2">
             <div className="row">
               <div className="col-md-12">
-                <section className="story-container border-0 border-bottom px-0 mx-0" id="story">
+                <section className="story-container px-0 mx-0" id="story">
                   <ul className="px-0">
                     <li>
                       <div className="story">
@@ -137,7 +137,7 @@ export default function Home() {
                 </section>
 
                 <section className="newsfeed my-5 ">
-                  <div className="card">
+                  <div className="card border border-2">
                     <div className="card-body py-3">
                       <div className="container">
                         <div className="row">
@@ -286,7 +286,7 @@ export default function Home() {
           </div>
         </main>
       </div>
-      <div className="col-md-4 border rounded mt-2 px-md-5 px-lg-5">
+      <div className="col-md-4 border border-2 rounded mt-md-4 mt-lg-4">
         <section className="mt-3">
           <div className="row">
             <div className="col-md-3">
@@ -301,7 +301,7 @@ export default function Home() {
               <ul className="ml-0 pl-1 mt-1 list-unstyled">
                 <li>
                   <p className="ml-3 text-dark mb-0 mt-1">
-                    <strong>bill_the_programmer.js</strong>
+                    <strong>Farhod</strong>
                   </p>
                 </li>
                 <li>

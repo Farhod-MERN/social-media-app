@@ -1,40 +1,51 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import {toast} from "react-toastify"
-import { useHistory } from 'react-router-dom';
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 export default function Signin() {
-  const [password, setPassword] = useState("")
-  const [email, setEmail] = useState("")
-  const history = useHistory()
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const history = useHistory();
 
-  const postData = ()=>{
-
-    if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){
-     toast.error("Invalid email, ex: example@gmail.com")
-     return
+  const postData = () => {
+    if (
+      !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      )
+    ) {
+      toast.error("Invalid email, ex: example@gmail.com");
+      return;
     }
 
     fetch("http://localhost:5000/signin", {
       method: "post",
-      headers:{
-        "Content-Type": "application/json"
+      headers: {
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email, password: password
-      })
-    }).then(res => res.json())
-    .then(data => {
-      console.log(data);
-      if(data.error){
-        toast.warning(data.error);
-      }else{
-        toast.success("Sign in succesfully");
-        history.push("/")
-      }
+        email: email,
+        password: password,
+      }),
     })
-  }
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.error) {
+          toast.warning(data.error);
+        } else {
+          
+          localStorage.setItem("jwt", data.token)
+          localStorage.setItem("user", JSON.stringify(data.user))
+
+          toast.success("Sign in succesfully");
+          history.push("/");
+        }
+      });
+  };
   return (
     <div>
       <section className="gradient-custom mb-3">
@@ -52,15 +63,15 @@ export default function Signin() {
                     <div className="form-outline form-white mb-4">
                       <input
                         value={email}
-                        onChange = {(e)=>{setEmail(e.target.value)}}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
                         type="email"
                         id="typeEmailX"
                         className="form-control form-control-lg border border-2"
                       />
                       <label className="form-label" htmlFor="typeEmailX">
-                         <span className="bg-dark px-1">
-                         Email
-                        </span>
+                        <span className="bg-dark px-1">Email</span>
                       </label>
                     </div>
 
@@ -68,7 +79,9 @@ export default function Signin() {
                       <input
                         type="password"
                         value={password}
-                        onChange = {(e)=>{setPassword(e.target.value)}}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
                         id="typePasswordX"
                         className="form-control form-control-lg border border-2"
                       />
@@ -78,7 +91,9 @@ export default function Signin() {
                     </div>
                     <button
                       className="btn btn-outline-light btn-lg px-5"
-                      onClick = {()=>{postData()}}
+                      onClick={() => {
+                        postData();
+                      }}
                     >
                       Sign In
                     </button>
@@ -87,7 +102,7 @@ export default function Signin() {
                     <p className="mb-0">
                       Don't have an account?{" "}
                       <Link to="/signup" className="text-white-50 fw-bold">
-                        Sign In
+                        Sign Up
                       </Link>
                     </p>
                   </div>

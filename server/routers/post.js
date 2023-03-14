@@ -21,7 +21,7 @@ router.get("/mypost", login, (req, res)=>{
 })
 
 router.post("/createpost", login,(req, res) => {
-  const { comment ,photo } = req.body;
+  const { comment, photo } = req.body;
 
   if (!comment || !photo) {
     res.status(422).json({ error: "All fields are required" });
