@@ -1,7 +1,66 @@
-import React from "react";
-import "../../css/profile.css"
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "../../css/profile.css";
+import "../../css/nopost.css";
 
 export default function Profile() {
+  const [data, setData] = useState([]);
+  const userInfo = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    fetch("http://localhost:5000/mypost", {
+      headers: {
+        Authorization: "Farhod " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setData(result.reverse());
+      });
+  });
+
+  const userPosts = () => {
+    if (data.length) {
+      return [
+        <div className="grid row">
+          {data.map((item) => {
+            return (
+              <div className="col-4 mb-2 d-flex align-items-center">
+                <img
+                  src={item.photo}
+                  alt="s"
+                  className="w-100 rounded-3 profileImages"
+                ></img>
+              </div>
+            );
+          })}
+        </div>,
+      ];
+    } else {
+      return [
+        <section class="page_404">
+          <div class="">
+            <div class="row">
+              <div class="text-center">
+                <div class="col-sm-offset-1 text-center">
+                  <div class="four_zero_four_bg">
+                    <h3 class="text-center ">NO POST</h3>
+                  </div>
+
+                  <div class="contant_box_404">
+                    <p>There aren't any post</p>
+
+                    <Link to="/create" class="link_404">
+                      Add post
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>,
+      ];
+    }
+  };
   return (
     <section className="h-100 gradient-custom-2">
       <div className="container py-5 h-100">
@@ -14,21 +73,23 @@ export default function Profile() {
                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                     alt="Generic placeholder"
                     className="img-fluid img-thumbnail mt-5 mb-2"
+                  ></img>
+                  <button
+                    type="button"
+                    className="btn btn-secondary btn-floating myEditBtn"
                   >
-                  </img>
-                  <button type="button" className="btn btn-secondary btn-lg btn-floating myEditBtn">
-                  <i className="bi bi-gear"></i>
+                    <i className="bi bi-gear"></i>
                   </button>
                 </div>
                 <div className="ms-3 mb-130">
-                  <h5>Andy Horwitz</h5>
+                  <h5>{userInfo.name}</h5>
                   <p>New York</p>
                 </div>
               </div>
               <div className="p-4 text-black">
                 <div className="d-flex justify-content-end text-center py-1">
                   <div>
-                    <p className="mb-1 h5">253</p>
+                    <p className="mb-1 h5">{data.length}</p>
                     <p className="small text-muted mb-0">Photos</p>
                   </div>
                   <div className="px-3">
@@ -52,41 +113,10 @@ export default function Profile() {
                 </div> */}
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <p className="lead fw-normal mb-0"></p>
-                  <p className="mb-0">
-                  </p>
+                  <p className="mb-0"></p>
                 </div>
-                <div className="row g-2">
-                  <div className="col mb-2">
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
-                      alt="s"
-                      className="w-100 rounded-3"
-                    ></img>
-                  </div>
-                  <div className="col mb-2">
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
-                      alt="s"
-                      className="w-100 rounded-3"
-                    ></img>
-                  </div>
-                </div>
-                <div className="row g-2">
-                  <div className="col">
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
-                      alt="s"
-                      className="w-100 rounded-3"
-                    ></img>
-                  </div>
-                  <div className="col">
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
-                      alt="s"
-                      className="w-100 rounded-3"
-                    ></img>
-                  </div>
-                </div>
+
+                {userPosts()}
               </div>
             </div>
           </div>

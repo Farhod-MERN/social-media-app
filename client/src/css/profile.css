@@ -19,5 +19,8 @@
     background-color: white !important;
 }
 .myEditBtn i{
-    font-size: 28px;
+    font-size: 24px;
+}
+.profileImages{
+  object-fit: cover !important;
 }
