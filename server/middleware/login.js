@@ -13,7 +13,8 @@ module.exports = (req, res, next) => {
     const token = authorization.replace("Farhod ", "")
     jwt.verify(token, JWT_SECRET, (err, payload)=>{
         if(err){
-           return res.status(401).json({error : "Error occured"}) 
+            console.log(err);
+           return res.status(401).json({error : "Error occured",}) 
         }
 
         const {_id} = payload

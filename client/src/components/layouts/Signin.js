@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import { useContext } from "react";
+import {UserContext} from "../../App"
 
 export default function Signin() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const history = useHistory();
+
+  //eslint-disable-next-line
+  const {dispatch, state} = useContext(UserContext)
 
   const postData = () => {
     if (
@@ -40,6 +45,8 @@ export default function Signin() {
           
           localStorage.setItem("jwt", data.token)
           localStorage.setItem("user", JSON.stringify(data.user))
+          
+          dispatch({type: "USER", payload: data.user})
 
           toast.success("Sign in succesfully");
           history.push("/");
