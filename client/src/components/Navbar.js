@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { ImHome } from "react-icons/im";
 import { MdExplore, MdOutlineAddCircle } from "react-icons/md";
 import {IoLogOut} from "react-icons/io5"
@@ -7,10 +7,18 @@ import { RiChatSmile3Fill,RiUser2Fill } from "react-icons/ri";
 import { BsSearchHeart } from "react-icons/bs";
 import { useContext } from "react";
 import { UserContext } from "../App";
-
+import { toast } from "react-toastify";
 export default function Navbar() {
   //eslint-disable-next-line
   const { state, dispatch } = useContext(UserContext);
+  const history = useHistory()
+
+  const logOut = ()=>{
+    localStorage.clear()
+    dispatch({type: "CLEAR"})
+    history.push("/signin")
+    toast.success("Log out successfully");
+  }
 
   const renderMenus = () => {
     if (state) {
@@ -21,7 +29,12 @@ export default function Navbar() {
               <RiUser2Fill /> <span className="px-2">My profile</span>
             </Link>
           </li>
-          <li className="border border-bottom py-1">
+          <li 
+          className="border border-bottom py-1" 
+          style={{cursor:"pointer"}}
+          onClick={()=>{logOut()}}
+          toast
+          >
             <span className="px-3 text-primary">
             <IoLogOut /><span className="px-2">Log out</span>
             </span>

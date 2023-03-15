@@ -48,7 +48,7 @@ export default function Signin() {
           
           dispatch({type: "USER", payload: data.user})
 
-          toast.success("Sign in succesfully");
+          toast.success("Log in successfully");
           history.push("/");
         }
       });

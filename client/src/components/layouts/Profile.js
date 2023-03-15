@@ -7,7 +7,7 @@ export default function Profile() {
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col col-lg-9 col-xl-7">
-            <div className="card">
+            <div className="card border border-2 shadow">
               <div className="rounded-top bg-dark text-white d-flex flex-row position-relative">
                 <div className="ms-4 mt-3 d-flex flex-column">
                   <img
@@ -51,7 +51,7 @@ export default function Profile() {
                   </div>
                 </div> */}
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                  <p className="lead fw-normal mb-0">Recent photos</p>
+                  <p className="lead fw-normal mb-0"></p>
                   <p className="mb-0">
                   </p>
                 </div>
