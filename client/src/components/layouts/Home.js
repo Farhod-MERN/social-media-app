@@ -1,11 +1,20 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../css/Home.css";
+import {BsHeart, BsHeartFill} from "react-icons/bs";
+import {FaHandHoldingHeart} from "react-icons/fa";
+import {UserContext} from "../../App"
+import { useContext } from "react";
+
+
 
 export default function Home() {
-   const [data, setData] = useState([]);
-   const userInfo = JSON.parse(localStorage.getItem("user"))
-    useEffect(() => {
+//eslint-disable-next-line
+  const {dispatch, state} = useContext(UserContext)
+
+  const [data, setData] = useState([]);
+  const userInfo = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
     fetch("http://localhost:5000/allpost", {
       headers: {
         Authorization: "Farhod " + localStorage.getItem("jwt"),
@@ -15,11 +24,67 @@ export default function Home() {
         return res.json();
       })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
 
         setData(result.reverse());
       });
   }, []);
+
+  const likePost = (id) => {
+    fetch("http://localhost:5000/like", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Farhod " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        postId: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        //bu bitta user 1 ta like bosishi uchun , agar like bosgan bo'lsa dataga o'sha user idisi tushib qo'ladi, keyin datani tekshiraman agar id bor bo'lsa u user like bosgan
+        const neewData = data.map(item => {
+          if(item._id === result._id){
+            console.log(result);
+            return result
+          }else{
+            console.log(item);
+            return item //agar postdagi likes arrayda user idisi bo'lsa eski likesni qaytar
+          }
+        })
+        setData(neewData)
+
+      }).catch(err =>{
+        console.log(err);
+      })
+  };
+
+  const unLikePost = (id) => {
+    fetch("http://localhost:5000/unlike", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Farhod " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        postId: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        const neewData = data.map(item => {
+          if(item._id === result._id){
+            return result
+          }else{
+            return item
+          }
+        })        
+        setData(neewData)
+      }).catch(err =>{
+        console.log(err);
+      })
+  };
 
   return (
     <div className="row container mx-auto mt-2">
@@ -231,13 +296,20 @@ export default function Home() {
                         <div className="card-body px-2 py-2 text-dark">
                           <div className="container">
                             <div className="row">
-                              <div className="col-md-8">
-                                <i className="bi bi-heart ml-0"></i>
-                                <i className="bi bi-heart mx-2"></i>
-                                <i className="bi bi-heart fa-lg"></i>
+                              <div className="col-6">
+                                {item.likes.includes(state._id) ? 
+                                <BsHeartFill 
+                                  className="likeBtn text-danger"
+                                  onClick={()=> unLikePost(item._id) } />
+                                  :
+                                  <BsHeart 
+                                    className="likeBtn"
+                                    onClick={()=> likePost(item._id) }/>
+                                }
                               </div>
+                              <div className="col-6 d-flex align-items-center justify-content-end"><FaHandHoldingHeart className="mx-2 text-danger likeBtn"/> {item.likes.length} likes</div>
                             </div>
-                            <div className="row mt-1">
+                            {/* <div className="row mt-1">
                               <div className="col-md-8 mt-1">
                                 <img
                                   className="rounded-circle mx-2"
@@ -250,7 +322,7 @@ export default function Home() {
                                   <strong>500,678</strong> others
                                 </small>
                               </div>
-                            </div>
+                            </div> */}
                             <div className="row">
                               <div className="col-md-12 mt-1">
                                 <p>
@@ -258,7 +330,9 @@ export default function Home() {
                                     {item.postedBy.name} :
                                   </strong>{" "}
                                   {item.comment}
-                                  <small className="my-1 mx-2 text-primary">more</small>
+                                  <small className="my-1 mx-2 text-primary">
+                                    more
+                                  </small>
                                 </p>
                               </div>
                             </div>

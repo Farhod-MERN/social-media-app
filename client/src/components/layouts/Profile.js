@@ -43,14 +43,14 @@ export default function Profile() {
               <div class="text-center">
                 <div class="col-sm-offset-1 text-center">
                   <div class="four_zero_four_bg">
-                    <h3 class="text-center ">NO POST</h3>
+                    <h3 class="text-center ">NO PHOTO</h3>
                   </div>
 
                   <div class="contant_box_404">
-                    <p>There aren't any post</p>
+                    <p>There aren't any photp</p>
 
                     <Link to="/create" class="link_404">
-                      Add post
+                      Add photo
                     </Link>
                   </div>
                 </div>

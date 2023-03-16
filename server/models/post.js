@@ -1,20 +1,33 @@
-const {Schema, model} = require("mongoose")
+const { Schema, model } = require("mongoose");
 
 const postSchema = new Schema({
-    comment: {
-        type: String,
-        required: true
+  comment: {
+    type: String,
+    required: true,
+  },
+  photo: {
+    type: String,
+    required: true,
+  },
+  postedBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
-    photo: {
-        type: String,
-        required: true,
-    },
-    postedBy: {
+  ],
+  comments: [
+    {
+      text: String,
+      postedBy: {
         type: Schema.Types.ObjectId,
-        ref : "User"
+        ref: "User",
+      },
+    },
+  ],
+});
 
-    }
-
-})
-
-model("Post", postSchema)
+model("Post", postSchema);
