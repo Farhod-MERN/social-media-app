@@ -8,6 +8,7 @@ const router = Router();
 router.get("/allpost", login, (req, res) => {
   Post.find()
     .populate("postedBy", "_id, name")
+    .populate("comments.postedBy")
     .then((data) => {
       res.json(data);
     })
@@ -54,13 +55,15 @@ router.put("/like", login, (req, res) => {
     {
       new: true, //bu options: yangilashga ruhsat berdik
     }
-  ).populate("postedBy").exec((err, result) => {
-    if (err) {
-      return res.status(422).json({ error: err });
-    } else {
-      res.json(result);
-    }
-  });
+  )
+    .populate("postedBy")
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else {
+        res.json(result);
+      }
+    });
 });
 router.put("/unlike", login, (req, res) => {
   Post.findByIdAndUpdate(
@@ -71,14 +74,43 @@ router.put("/unlike", login, (req, res) => {
     {
       new: true, //bu options: yangilashga ruhsat berdik
     }
-  ).populate("postedBy").exec((err, result) => {
-    if (err) {
-      return res.status(422).json({ error: err });
-    } else {
-      res.json(result);
-    }
-  });
+  )
+    .populate("postedBy")
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else {
+        res.json(result);
+      }
+    });
 });
 
+router.put("/comments", login, (req, res) => {
+  const comment = {
+    text: req.body.text,
+    postedBy: req.user._id,
+  };
+  Post.findByIdAndUpdate(
+    req.body.postedBy,
+    {
+      $push: {
+        comments: comment,
+      },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("comments.postedBy", "name _id")
+    .populate("postedBy")
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else {
+        // console.log(result);
+        return res.json(result);
+      }
+    });
+});
 // exec() - bu mongoose metodi hisoblanadi , va undan oldingi vazifalarni tekshiradi ekseqiud
 module.exports = router;

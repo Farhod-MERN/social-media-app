@@ -7,7 +7,6 @@
     overflow: hidden;
     position: relative;
   }
-
   .story {
     border-radius: 50%;
   }
@@ -53,4 +52,20 @@
     font-size: 1.5rem;
     margin: 0 5px;
     cursor: pointer;
+  }
+
+  .myCommentDiv{
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  .mySendBtn{
+    background: transparent !important;
+    outline: none !important;
+    border: none !important;
+    font-size: 2rem;
+    padding:0 10px;
+    margin: 0;
+    margin-top: -12px !important;
+    padding-bottom: 15px !important;
+    color: black;
   }

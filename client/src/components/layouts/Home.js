@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../css/Home.css";
-import {BsHeart, BsHeartFill} from "react-icons/bs";
-import {FaHandHoldingHeart} from "react-icons/fa";
-import {UserContext} from "../../App"
+import { BsHeart, BsHeartFill} from "react-icons/bs";
+import {MdSend} from "react-icons/md"
+import { FaHandHoldingHeart } from "react-icons/fa";
+import { TfiCommentsSmiley } from "react-icons/tfi";
+import { UserContext } from "../../App";
 import { useContext } from "react";
 
-
-
 export default function Home() {
-//eslint-disable-next-line
-  const {dispatch, state} = useContext(UserContext)
-
+  //eslint-disable-next-line
+  const { dispatch, state } = useContext(UserContext);
+  const [commentText, setCommentText] = useState('')
   const [data, setData] = useState([]);
+  const [show, setShow] = useState(false)
   const userInfo = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     fetch("http://localhost:5000/allpost", {
       headers: {
@@ -44,20 +46,20 @@ export default function Home() {
       .then((res) => res.json())
       .then((result) => {
         //bu bitta user 1 ta like bosishi uchun , agar like bosgan bo'lsa dataga o'sha user idisi tushib qo'ladi, keyin datani tekshiraman agar id bor bo'lsa u user like bosgan
-        const neewData = data.map(item => {
-          if(item._id === result._id){
-            console.log(result);
-            return result
-          }else{
-            console.log(item);
-            return item //agar postdagi likes arrayda user idisi bo'lsa eski likesni qaytar
+        const neewData = data.map((item) => {
+          if (item._id === result._id) {
+            // console.log(result);
+            return result;
+          } else {
+            // console.log(item);
+            return item; //agar postdagi likes arrayda user idisi bo'lsa eski likesni qaytar
           }
-        })
-        setData(neewData)
-
-      }).catch(err =>{
-        console.log(err);
+        });
+        setData(neewData);
       })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const unLikePost = (id) => {
@@ -73,19 +75,45 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((result) => {
-        const neewData = data.map(item => {
-          if(item._id === result._id){
-            return result
-          }else{
-            return item
+        const neewData = data.map((item) => {
+          if (item._id === result._id) {
+            return result;
+          } else {
+            return item;
           }
-        })        
-        setData(neewData)
-      }).catch(err =>{
-        console.log(err);
+        });
+        setData(neewData);
       })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
+  const commentPost = (text, postedBy) => {
+    fetch("http://localhost:5000/comments", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Farhod " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        postedBy, text
+      })
+    }).then((res)=> res.json()).then(result=>{
+      const newData = data.map((item)=>{
+        if(item._id === result._id){
+          return result
+        }else{
+          return item
+        }
+      })
+      setData(newData)
+      console.log(result ,"uraaaa");
+    }).catch(err =>{
+      console.log(err);
+    })
+  };
+  
   return (
     <div className="row container mx-auto mt-2">
       <div className="col-md-8 px-md-5 px-lg-5">
@@ -219,9 +247,9 @@ export default function Home() {
                   </ul>
                 </section>
 
-                <section className="newsfeed my-5 ">
+                <section className="newsfeed my-5 px-lg-5">
                   {data.map((item) => {
-                    console.log(item);
+                    // console.log(item);
                     return (
                       <div className="card border border-2">
                         <div className="card-body py-2 px-1">
@@ -297,17 +325,26 @@ export default function Home() {
                           <div className="container">
                             <div className="row">
                               <div className="col-6">
-                                {item.likes.includes(state._id) ? 
-                                <BsHeartFill 
-                                  className="likeBtn text-danger"
-                                  onClick={()=> unLikePost(item._id) } />
-                                  :
-                                  <BsHeart 
+                                {item.likes.includes(state._id) ? (
+                                  <BsHeartFill
+                                    className="likeBtn text-danger"
+                                    onClick={() => unLikePost(item._id)}
+                                  />
+                                ) : (
+                                  <BsHeart
                                     className="likeBtn"
-                                    onClick={()=> likePost(item._id) }/>
-                                }
+                                    onClick={() => likePost(item._id)}
+                                  />
+                                )}
+                                <TfiCommentsSmiley 
+                                  className="likeBtn"
+                                  onClick={()=>{setShow(!show)}}
+                                  />
                               </div>
-                              <div className="col-6 d-flex align-items-center justify-content-end"><FaHandHoldingHeart className="mx-2 text-danger likeBtn"/> {item.likes.length} likes</div>
+                              <div className="col-6 d-flex align-items-center justify-content-end">
+                                <FaHandHoldingHeart className="mx-2 text-danger likeBtn" />{" "}
+                                {item.likes.length} likes
+                              </div>
                             </div>
                             {/* <div className="row mt-1">
                               <div className="col-md-8 mt-1">
@@ -328,37 +365,51 @@ export default function Home() {
                                 <p>
                                   <strong className="text-dark">
                                     {item.postedBy.name} :
-                                  </strong>{" "}
+                                  </strong>
                                   {item.comment}
-                                  <small className="my-1 mx-2 text-primary">
+                                  {/* <small className="my-1 mx-2 text-primary">
                                     more
-                                  </small>
+                                  </small> */}
+                                  <p className="my-1">
+                                    {item.comments.length} comments, <small 
+                                      style={{cursor: "pointer"}} 
+                                      className="text-primary"
+                                      onClick={()=>{setShow(!show)}}
+                                      >read ...</small>
+                                  </p>
                                 </p>
                               </div>
                             </div>
-                            <div className="row">
-                              <small className="my-1">
-                                View all 2137 comments
-                              </small>
-                              <p className="mb-0">
-                                <strong className="text-dark">alex_123</strong>{" "}
-                                Lorem, ipsum dolor.
-                              </p>
-                              <p>
-                                <strong className="text-dark">janet_t</strong>{" "}
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Necessitatibus corporis omnis
-                                facilis possimus.
-                              </p>
-                              <small className="my-1">22 hours ago</small>
-                            </div>
-
-                            <div className="row mt-2">
+                            {
+                              show ? 
+                                <div className="row myCommentDiv">
+                                  {
+                                    item.comments.map(c => {
+                                    return(
+                                    <p key={new Date().getTime} className="mb-0">
+                                    <strong className="text-dark">{c.postedBy.name} : </strong>
+                                    {c.text}
+                                    </p>) 
+                                    })
+                                  }
+                                  {/* <small className="my-1">22 hours ago</small> */}
+                                </div>
+                                : null
+                            }
+                            <form 
+                              className="row mt-2"
+                              onSubmit={(e)=>{
+                                e.preventDefault()
+                                commentPost(commentText, item._id)
+                                setCommentText("")
+                              }}>
                               <hr />
-                              <div className="col-md-11">
+                              <div className="col-11">
                                 <div className="form-outline">
                                   <input
                                     type="text"
+                                    value={commentText}
+                                    onChange={(e)=> setCommentText(e.target.value)}
                                     id="form1"
                                     className="form-control placeholder-active"
                                     placeholder="Leave a comment"
@@ -370,10 +421,10 @@ export default function Home() {
                                   </div>
                                 </div>
                               </div>
-                              <div className="col-md-1">
-                                <p className="text-info mt-1">Post</p>
+                              <div className="col-1 m-0 p-0">
+                                <button className="mySendBtn text-info"><MdSend className="m-0 p-0"/></button>
                               </div>
-                            </div>
+                            </form>
                           </div>
                         </div>
                       </div>
@@ -412,7 +463,7 @@ export default function Home() {
 
           <div className="d-flex justify-content-between">
             <small>Suggestions For You</small>
-            <span className="float-right text-dark">See All</span>
+            {/* <span className="float-right text-dark">See All</span> */}
           </div>
 
           <div className="row">
@@ -431,11 +482,11 @@ export default function Home() {
                     <strong>john_23</strong>
                   </small>
                 </li>
-                <li>
+                {/* <li>
                   <span className="user-name">
                     Followed by john_1 + 20 more
                   </span>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="col-md-2 col-2">
@@ -458,11 +509,11 @@ export default function Home() {
                     <strong>donald_the_duck</strong>
                   </small>
                 </li>
-                <li>
+                {/* <li>
                   <span className="user-name">
                     Followed by john_1 + 35 more
                   </span>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="col-md-2">
@@ -485,9 +536,9 @@ export default function Home() {
                     <strong>bill_the_programmer.js</strong>
                   </small>
                 </li>
-                <li>
+                {/* <li>
                   <span className="user-name">Followed by john_1 +10 more</span>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="col-md-2">
@@ -510,9 +561,9 @@ export default function Home() {
                     <strong>bill_the_programmer.js</strong>
                   </small>
                 </li>
-                <li>
+                {/* <li>
                   <span className="user-name">Followed by john_1 +10 more</span>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="col-md-2">

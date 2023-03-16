@@ -42,7 +42,7 @@ export default function Create() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         setUrl(data.url)
       })
       .catch((err) => {
@@ -70,7 +70,7 @@ export default function Create() {
                           id="inputGroupFile01"
                           onChange={(e) => {
                             setImage(e.target.files[0]);
-                            console.log(e.target.files[0]);
+                            // console.log(e.target.files[0]);
                           }}
                         />
                       </div>

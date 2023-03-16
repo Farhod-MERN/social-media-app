@@ -22,4 +22,12 @@
     .myDropDown .myMenues span.nav-link{
         padding-bottom:0;
     }
+    .lestSide{
+        display: none;
+    }
+}
+@media (max-width: 1440px) {
+    .lestSide{
+        display: none;
+    }    
 }
