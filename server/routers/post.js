@@ -7,8 +7,8 @@ const router = Router();
 
 router.get("/allpost", login, (req, res) => {
   Post.find()
-    .populate("postedBy", "_id, name")
-    .populate("comments.postedBy")
+    .populate("postedBy")
+    .populate("comments.postedBy", "name _id")
     .then((data) => {
       res.json(data);
     })
@@ -57,6 +57,7 @@ router.put("/like", login, (req, res) => {
     }
   )
     .populate("postedBy")
+    .populate("comments.postedBy", "name _id")
     .exec((err, result) => {
       if (err) {
         return res.status(422).json({ error: err });
@@ -76,6 +77,7 @@ router.put("/unlike", login, (req, res) => {
     }
   )
     .populate("postedBy")
+    .populate("comments.postedBy", "name _id")
     .exec((err, result) => {
       if (err) {
         return res.status(422).json({ error: err });
