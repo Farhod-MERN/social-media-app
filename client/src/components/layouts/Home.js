@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../css/Home.css";
-import { BsHeart, BsHeartFill} from "react-icons/bs";
-import {MdSend} from "react-icons/md"
+import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { MdSend } from "react-icons/md";
 import { FaHandHoldingHeart } from "react-icons/fa";
 import { TfiCommentsSmiley } from "react-icons/tfi";
 import { UserContext } from "../../App";
@@ -11,9 +11,9 @@ import { useContext } from "react";
 export default function Home() {
   //eslint-disable-next-line
   const { dispatch, state } = useContext(UserContext);
-  const [commentText, setCommentText] = useState('')
+  const [commentText, setCommentText] = useState("");
   const [data, setData] = useState([]);
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -97,23 +97,43 @@ export default function Home() {
         Authorization: "Farhod " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
-        postedBy, text
-      })
-    }).then((res)=> res.json()).then(result=>{
-      const newData = data.map((item)=>{
-        if(item._id === result._id){
-          return result
-        }else{
-          return item
-        }
-      })
-      setData(newData)
-      console.log(result ,"uraaaa");
-    }).catch(err =>{
-      console.log(err);
+        postedBy,
+        text,
+      }),
     })
+      .then((res) => res.json())
+      .then((result) => {
+        const newData = data.map((item) => {
+          if (item._id === result._id) {
+            return result;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
+        console.log(result, "uraaaa");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-  
+
+  const deletePost = (postId)=>{
+    fetch(`http://localhost:5000/deletepost/${postId}`, {
+      method: "delete",
+      headers: {
+        Authorization: "Farhod " + localStorage.getItem("jwt"),
+      }
+    }).then(res => res.json())
+      .then(result =>{
+        const newData = data.filter(s => s._id !== result._id)
+        setData(newData)
+      }).catch(err =>{
+        console.log(err);
+      })
+
+  }
+
   return (
     <div className="row container mx-auto mt-2">
       <div className="col-md-8 px-md-5 px-lg-5">
@@ -264,7 +284,7 @@ export default function Home() {
                                     alt="Avatar"
                                   ></img>
                                   <div className="mt-2 mx-1">
-                                    <a href="/sas" className="text-dark">
+                                    <a href="/" className="text-dark">
                                       <strong className="mt-5 ml-2">
                                         {item.postedBy.name}
                                       </strong>
@@ -276,7 +296,7 @@ export default function Home() {
                                 <div className="nav-item dropdown me-3 me-lg-1">
                                   <Link
                                     className="nav-link dropdown-toggle hidden-arrow"
-                                    to=""
+                                    to="/"
                                     id="navbarDropdownMenuLink"
                                     role="button"
                                     data-mdb-toggle="dropdown"
@@ -292,15 +312,33 @@ export default function Home() {
                                     aria-labelledby="navbarDropdownMenuLink"
                                   >
                                     <li className="border border-bottom py-1">
-                                      <Link to="/profile" className="px-3">
+                                      <Link to="/" className="px-3">
                                         Copy Link
                                       </Link>
                                     </li>
                                     <li className="border border-bottom py-1">
-                                      <Link to="/signin" className="px-3">
-                                        Edit
+                                      <Link to="/" className="px-3">
+                                        DownLoad
                                       </Link>
                                     </li>
+                                    {item.postedBy._id === state._id ? (
+                                      <>
+                                        <li className="border border-bottom py-1">
+                                          <Link to="/" className="px-3">
+                                            Edit
+                                          </Link>
+                                        </li>
+                                        <li className="border border-bottom py-1">
+                                          <span
+                                            className="px-3 text-danger"
+                                            style={{cursor: "pointer"}}
+                                            onClick={() => deletePost(item._id)}
+                                          >
+                                            Delete
+                                          </span>
+                                        </li>
+                                      </>
+                                    ) : null}
                                   </ul>
                                 </div>
                               </div>
@@ -336,10 +374,12 @@ export default function Home() {
                                     onClick={() => likePost(item._id)}
                                   />
                                 )}
-                                <TfiCommentsSmiley 
+                                <TfiCommentsSmiley
                                   className="likeBtn"
-                                  onClick={()=>{setShow(!show)}}
-                                  />
+                                  onClick={() => {
+                                    setShow(!show);
+                                  }}
+                                />
                               </div>
                               <div className="col-6 d-flex align-items-center justify-content-end">
                                 <FaHandHoldingHeart className="mx-2 text-danger likeBtn" />{" "}
@@ -371,45 +411,55 @@ export default function Home() {
                                     more
                                   </small> */}
                                   <p className="my-1">
-                                    {item.comments.length} comments, <small 
-                                      style={{cursor: "pointer"}} 
+                                    {item.comments.length} comments,{" "}
+                                    <small
+                                      style={{ cursor: "pointer" }}
                                       className="text-primary"
-                                      onClick={()=>{setShow(!show)}}
-                                      >read ...</small>
+                                      onClick={() => {
+                                        setShow(!show);
+                                      }}
+                                    >
+                                      read ...
+                                    </small>
                                   </p>
                                 </p>
                               </div>
                             </div>
-                            {
-                              show ? 
-                                <div className="row myCommentDiv">
-                                  {
-                                    item.comments.map(c => {
-                                    return(
-                                    <p key={new Date().getTime} className="mb-0">
-                                    <strong className="text-dark">{c.postedBy.name} : </strong>
-                                    {c.text}
-                                    </p>) 
-                                    })
-                                  }
-                                  {/* <small className="my-1">22 hours ago</small> */}
-                                </div>
-                                : null
-                            }
-                            <form 
+                            {show ? (
+                              <div className="row myCommentDiv">
+                                {item.comments.map((c) => {
+                                  return (
+                                    <p
+                                      key={new Date().getTime}
+                                      className="mb-0"
+                                    >
+                                      <strong className="text-dark">
+                                        {c.postedBy.name} :{" "}
+                                      </strong>
+                                      {c.text}
+                                    </p>
+                                  );
+                                })}
+                                {/* <small className="my-1">22 hours ago</small> */}
+                              </div>
+                            ) : null}
+                            <form
                               className="row mt-2"
-                              onSubmit={(e)=>{
-                                e.preventDefault()
-                                commentPost(commentText, item._id)
-                                setCommentText("")
-                              }}>
+                              onSubmit={(e) => {
+                                e.preventDefault();
+                                commentPost(commentText, item._id);
+                                setCommentText("");
+                              }}
+                            >
                               <hr />
                               <div className="col-11">
                                 <div className="form-outline">
                                   <input
                                     type="text"
                                     value={commentText}
-                                    onChange={(e)=> setCommentText(e.target.value)}
+                                    onChange={(e) =>
+                                      setCommentText(e.target.value)
+                                    }
                                     id="form1"
                                     className="form-control placeholder-active"
                                     placeholder="Leave a comment"
@@ -422,7 +472,9 @@ export default function Home() {
                                 </div>
                               </div>
                               <div className="col-1 m-0 p-0">
-                                <button className="mySendBtn text-info"><MdSend className="m-0 p-0"/></button>
+                                <button className="mySendBtn text-info">
+                                  <MdSend className="m-0 p-0" />
+                                </button>
                               </div>
                             </form>
                           </div>

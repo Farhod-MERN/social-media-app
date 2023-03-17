@@ -33,7 +33,6 @@ export default function Navbar() {
           className="border border-bottom py-1" 
           style={{cursor:"pointer"}}
           onClick={()=>{logOut()}}
-          toast
           >
             <span className="px-3 text-primary">
             <IoLogOut /><span className="px-2">Log out</span>
