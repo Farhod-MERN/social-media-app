@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import "../../css/profile.css";
 import "../../css/nopost.css";
+import Loader from "./Loader";
+
 
 export default function Profile() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const userInfo = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     fetch("http://localhost:5000/mypost", {
@@ -16,7 +18,7 @@ export default function Profile() {
       .then((result) => {
         setData(result.reverse());
       });
-  });
+  }, []);
 
   const userPosts = () => {
     if (data.length) {
@@ -62,7 +64,8 @@ export default function Profile() {
     }
   };
   return (
-    <section className="h-100 gradient-custom-2">
+    <>
+      {data ? (<section className="h-100 gradient-custom-2">
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col col-lg-9 col-xl-7">
@@ -122,6 +125,8 @@ export default function Profile() {
           </div>
         </div>
       </div>
-    </section>
+    </section>) : 
+    <Loader />}
+    </>
   );
 }

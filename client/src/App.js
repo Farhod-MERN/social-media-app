@@ -11,6 +11,7 @@ import Profile from "./components/layouts/Profile";
 import Navbar from "./components/Navbar";
 import Create from "./components/layouts/Create";
 import Chat from "./components/layouts/Chat";
+import UserProfile from "./components/layouts/userProfile";
 
 export const UserContext = createContext();
 
@@ -21,7 +22,6 @@ const Routering = () => {
   useEffect(()=>{
     const user = JSON.parse(localStorage.getItem("user"))
       if(user){
-        history.push("/")
         dispatch({type: "USER", payload: user}) //bu state ga userni saqlab qo'yadi
       }else{
         history.push("/signin")
@@ -48,6 +48,9 @@ const Routering = () => {
       </Route>
       <Route path="/chat">
         <Chat />
+      </Route>
+      <Route path="/user/:id">
+        <UserProfile />
       </Route>
     </Switch>
   );

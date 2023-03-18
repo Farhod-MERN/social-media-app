@@ -5,7 +5,7 @@ const Post = mongoose.model("Post");
 const router = Router();
 const loginMiddleware = require("../middleware/login")
 
-router.get("/user/:id", (req, res)=>{
+router.get("/user/:id", loginMiddleware,(req, res)=>{
     User.findOne({_id : req.params.id})
         .then(user =>{
         Post.find({postedBy: req.params.id})
