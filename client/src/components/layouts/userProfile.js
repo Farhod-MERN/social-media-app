@@ -81,7 +81,7 @@ export default function UserProfile() {
                       </div>
                     ) : (
                       <section className="page_404">
-                        <div className="">
+                        <div className="w-100">
                           <div className="row">
                             <div className="text-center">
                               <div className="col-sm-offset-1 text-center">

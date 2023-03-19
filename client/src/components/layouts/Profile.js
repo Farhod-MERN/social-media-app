@@ -40,7 +40,7 @@ export default function Profile() {
     } else {
       return [
         <section class="page_404">
-          <div class="">
+          <div class="w-100">
             <div class="row">
               <div class="text-center">
                 <div class="col-sm-offset-1 text-center">
