@@ -1,9 +1,9 @@
 .card .rounded-top {
   height: 150px;
 }
-.card .d-flex.flex-column {
-  width: 190px;
-}
+/* .card .d-flex.flex-column {
+  width: 100%;
+} */
 .card .img-fluid {
   width: 150px;
   z-index: 1;

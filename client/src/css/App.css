@@ -25,6 +25,9 @@
     .lestSide{
         display: none;
     }
+    .userProfileImg{
+        width: 90px !important;
+    }
 }
 @media (max-width: 1440px) {
     .lestSide{

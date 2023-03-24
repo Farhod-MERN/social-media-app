@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import "../../css/profile.css";
 import "../../css/nopost.css";
 import Loader from "./Loader";
-
+import { UserContext } from "../../App";
+import { useContext } from "react";
 
 export default function Profile() {
+  // eslint-disable-next-line
+  const { state, dispatch } = useContext(UserContext);
   const [data, setData] = useState(null);
   const userInfo = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
@@ -49,7 +52,7 @@ export default function Profile() {
                   </div>
 
                   <div class="contant_box_404">
-                    <p>There aren't any photp</p>
+                    <p>There aren't any photo</p>
 
                     <Link to="/create" class="link_404">
                       Add photo
@@ -96,11 +99,11 @@ export default function Profile() {
                     <p className="small text-muted mb-0">Photos</p>
                   </div>
                   <div className="px-3">
-                    <p className="mb-1 h5">1026</p>
+                    <p className="mb-1 h5">{userInfo.followers.length ? userInfo.followers.length : 0}</p>
                     <p className="small text-muted mb-0">Followers</p>
                   </div>
                   <div>
-                    <p className="mb-1 h5">478</p>
+                    <p className="mb-1 h5">{userInfo.following.length ? userInfo.following.length : 0}</p>
                     <p className="small text-muted mb-0">Following</p>
                   </div>
                 </div>

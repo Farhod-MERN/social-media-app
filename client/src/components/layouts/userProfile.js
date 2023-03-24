@@ -3,11 +3,17 @@ import "../../css/profile.css";
 import "../../css/nopost.css";
 import { useParams } from "react-router-dom";
 import Loader from "../layouts/Loader";
+import { RiUserUnfollowFill, RiUserFollowFill } from "react-icons/ri";
+import { toast } from "react-toastify";
+import { UserContext } from "../../App";
+import { useContext } from "react";
 
 export default function UserProfile() {
   const { id } = useParams();
   // 640efddd6c599e64b53cdfc8
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(null); //datada userni malumotlari turadi {posts: [], user: {}}
+  const { state, dispatch } = useContext(UserContext);
+  const [showFollow, setShowFollow] = useState(state.following ? !state.following.includes(id) : true);
 
   useEffect(() => {
     fetch(`http://localhost:5000/user/${id}`, {
@@ -17,12 +23,87 @@ export default function UserProfile() {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
-        setData(result);
+        setData(result); //userni malumotlari turadi {posts: [], user: {}}
       });
-      //eslint-disable-next-line
-  }, []);
+  });
 
+  const followUser = () => {
+    fetch("http://localhost:5000/follow", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Farhod " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        followId: id, //id paramsdan kelyapdi
+      }),
+    })
+      .then((result) => result.json())
+      .then((mydata) => {
+        // mydata
+        // email: "admin@gmail.com"
+        // followers: []
+        // following: ['640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8']
+        // name: "Admin"
+        // _id: "6411b0f147c93a7fbc0a534a"
+        dispatch({
+          type: "UPDATE",
+          payload: { following: mydata.following, followers: mydata.followers },
+        });
+        localStorage.setItem("user", JSON.stringify(mydata));
+        setData((prevState) => {
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: [...prevState.user.followers, mydata._id],
+            },
+          };
+        });
+        setShowFollow(false)
+        toast.success("you start following this user");
+      });
+  };
+
+  const unFollowUser = () => {
+    fetch("http://localhost:5000/unfollow", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Farhod " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        unfollowId: id, //id paramsdan kelyapdi
+      }),
+    })
+      .then((result) => result.json())
+      .then((mydata) => {
+        // mydata
+        // email: "admin@gmail.com"
+        // followers: []
+        // following: ['640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8', '640efddd6c599e64b53cdfc8']
+        // name: "Admin"
+        // _id: "6411b0f147c93a7fbc0a534a"
+        dispatch({
+          type: "UPDATE",
+          payload: { following: mydata.following, followers: mydata.followers },
+        });
+        localStorage.setItem("user", JSON.stringify(mydata));
+        setData( (prevState) => {
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: prevState.user.followers.filter(
+                (s) => s !== mydata._id // bu yerda o'zimni idimni olib tashlayapman
+              ),
+            },
+          };
+        });
+        setShowFollow(true)
+        toast.warning("you stop following this user");
+      });
+  };
   return (
     <>
       {data ? (
@@ -36,8 +117,29 @@ export default function UserProfile() {
                       <img
                         src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                         alt="Generic placeholder"
-                        className="img-fluid img-thumbnail mt-5 mb-2"
+                        className="img-fluid img-thumbnail mt-5 mb-2 userProfileImg"
                       ></img>
+                      {showFollow ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            followUser();
+                          }}
+                          className="btn btn-secondary btn-floating myEditBtn"
+                        >
+                          <RiUserFollowFill style={{ fontSize: "1.7rem" }} />
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            unFollowUser();
+                          }}
+                          className="btn btn-secondary btn-floating myEditBtn"
+                        >
+                          <RiUserUnfollowFill style={{ fontSize: "1.7rem" }} />
+                        </button>
+                      )}
                     </div>
                     <div className="ms-3 mb-130">
                       <h5>{data.user.name}</h5>
@@ -51,11 +153,11 @@ export default function UserProfile() {
                         <p className="small text-muted mb-0">Photos</p>
                       </div>
                       <div className="px-3">
-                        <p className="mb-1 h5">1026</p>
+                        <p className="mb-1 h5">{data.user.followers.length}</p>
                         <p className="small text-muted mb-0">Followers</p>
                       </div>
                       <div>
-                        <p className="mb-1 h5">478</p>
+                        <p className="mb-1 h5">{data.user.following.length}</p>
                         <p className="small text-muted mb-0">Following</p>
                       </div>
                     </div>
@@ -90,7 +192,7 @@ export default function UserProfile() {
                                 </div>
 
                                 <div className="contant_box_404">
-                                  <p>There aren't any photp</p>
+                                  <p>There aren't any photo</p>
                                 </div>
                               </div>
                             </div>
@@ -104,9 +206,9 @@ export default function UserProfile() {
             </div>
           </div>
         </section>
-      ) : 
+      ) : (
         <Loader />
-      }
+      )}
     </>
   );
 }
