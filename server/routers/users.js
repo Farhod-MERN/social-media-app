@@ -82,5 +82,15 @@ router.put("/updatepic",loginMiddleware, (req, res)=>{
     res.json(result)
   })
 })
+router.put("/updatename",loginMiddleware, (req, res)=>{
+  User.findByIdAndUpdate(req.user._id, {$set: {name: req.body.myname}}, {
+    new: true
+  }, (err, result)=>{
+    if(err){
+      return res.status(422).json({error: "name cann't uploaded"})
+    }
+    res.json(result)
+  })
+})
 
 module.exports = router;

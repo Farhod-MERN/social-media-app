@@ -10,8 +10,8 @@ import {toast} from "react-toastify"
 
 export default function Profile() {
   // eslint-disable-next-line
-  useRef.current = JSON.parse(localStorage.getItem("user"));
   const { state, dispatch } = useContext(UserContext);
+  useRef.current = JSON.parse(localStorage.getItem("user"));
   const [data, setData] = useState(null);
   const [modalshow, setmodalshow] = useState(false);
   const [isEdit, setisEdit] = useState(false);
@@ -122,13 +122,30 @@ export default function Profile() {
       toast.success("Saved successfully")
   }
   const setProfile = ()=>{
-            localStorage.setItem("user",
-            JSON.stringify({...useRef.current, name: myname})) //? result.url : useRef.current.pic
-            useRef.current = JSON.parse(localStorage.getItem("user"));
-            
-            dispatch({type: "UPDATENAME", payload: myname})
+            fetch("http://localhost:5000/updatename", {
+              method: "put",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Farhod " + localStorage.getItem("jwt"),
+              },
+              body: JSON.stringify({
+                myname: myname
+              })
+            }).then((response)=> response.json()).then(
+              result => {
+                console.log(result);
+                localStorage.setItem("user",
+                JSON.stringify({...useRef.current, name: result.name})) //? result.url : useRef.current.pic
+                useRef.current = JSON.parse(localStorage.getItem("user"));
+  
+                dispatch({type: "UPDATEPIC", payload: result.name})
+                 toast.success("Saved successfully")
+              } 
+            ).catch(err =>{
+              console.log(err);
+            })
+
             setisEdit(false)
-            toast.success("Saved successfully")
   }
   return (
     <>
@@ -148,12 +165,6 @@ export default function Profile() {
                     </button>
                   </div>
                 </div>
-
-                  {/* <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                    alt="Generic placeholder"
-                    className="img-fluid img-thumbnail mt-5 mb-2"
-                  ></img> */}
                   <button
                     type="button"
                     onClick={()=>{setisEdit(true)}}
