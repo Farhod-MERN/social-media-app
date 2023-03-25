@@ -147,4 +147,14 @@ router.get("/getsubspost", login, (req, res) => {
    return console.log(err);
   })
 });
+router.get("/followerspost", login, (req, res) => {
+  //posttedBy ni followingni ichidan olamiz 
+  Post.find({ postedBy: { $in: req.user.followers } })
+  .populate("postedBy")
+  .populate("comments.postedBy")
+  .then(posts => res.json({posts}))
+  .catch(err => {
+   return console.log(err);
+  })
+});
 module.exports = router;

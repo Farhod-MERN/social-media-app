@@ -28,6 +28,10 @@
     .userProfileImg{
         width: 90px !important;
     }
+    .card .images{
+        width: 100px !important;
+        height: 100px !important;
+    }
 }
 @media (max-width: 1440px) {
     .lestSide{

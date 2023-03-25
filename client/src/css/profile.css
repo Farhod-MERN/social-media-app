@@ -4,8 +4,10 @@
 /* .card .d-flex.flex-column {
   width: 100%;
 } */
-.card .img-fluid {
+.card .images {
   width: 150px;
+  height: 150px;
+  object-fit: cover;
   z-index: 1;
   border-radius: 50%;
 }
@@ -23,4 +25,79 @@
 }
 .profileImages{
   object-fit: cover !important;
+}
+
+.containers {
+  position: relative;
+  width: 100%;
+}
+
+.images {
+  opacity: 1;
+  display: block;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middles {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.containers:hover .images {
+  opacity: 0.3;
+}
+
+.containers:hover .middles {
+  opacity: 1;
+}
+
+.texts {
+  background-color: #04AA6D;
+  color: white;
+  font-size: 1.5rem;
+  padding: 5px 10px;
+}
+.myModal{
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(109, 108, 108);
+  z-index: 999999;
+}
+.modal__content{
+  background-color: aliceblue;
+  width: 600px;
+  min-height: 40vh;
+  border-radius: 16px;
+}
+.modalHeader{
+  display: flex;
+  justify-content: space-between;
+}
+.closeBtn{
+  font-size: 2rem;
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+}
+@media (max-width: 900px) {
+  .modal__content{
+    background-color: aliceblue;
+    width: 95%;
+    min-height: 40vh;
+  }
 }

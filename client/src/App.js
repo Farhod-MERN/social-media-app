@@ -12,6 +12,8 @@ import Navbar from "./components/Navbar";
 import Create from "./components/layouts/Create";
 import Chat from "./components/layouts/Chat";
 import UserProfile from "./components/layouts/userProfile";
+import SubsUserPost from "./components/layouts/SubsUserPost";
+import FollowersPosts from "./components/layouts/FollowersPosts";
 
 export const UserContext = createContext();
 
@@ -51,6 +53,12 @@ const Routering = () => {
       </Route>
       <Route path="/user/:id">
         <UserProfile />
+      </Route>
+      <Route path="/followingpost">
+        <SubsUserPost />
+      </Route>
+      <Route path="/followerspost">
+        <FollowersPosts />
       </Route>
     </Switch>
   );

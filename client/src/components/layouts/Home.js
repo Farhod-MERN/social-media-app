@@ -289,7 +289,7 @@ export default function Home() {
                                       className="text-dark d-flex"
                                     >
                                       <img
-                                        src="https://farhod.vercel.app/_next/image?url=%2Fimages%2Ffarhod.jpg&w=128&q=100"
+                                        src={item.postedBy.pic}
                                         className="rounded-circle"
                                         style={{ width: "40px" }}
                                         alt="Avatar"

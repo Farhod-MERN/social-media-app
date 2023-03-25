@@ -1,16 +1,25 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState, useRef} from "react";
 import { Link } from "react-router-dom";
 import "../../css/profile.css";
 import "../../css/nopost.css";
 import Loader from "./Loader";
 import { UserContext } from "../../App";
 import { useContext } from "react";
+import {MdAddPhotoAlternate, MdClose} from "react-icons/md"
+import {toast} from "react-toastify"
 
 export default function Profile() {
   // eslint-disable-next-line
+  useRef.current = JSON.parse(localStorage.getItem("user"));
   const { state, dispatch } = useContext(UserContext);
   const [data, setData] = useState(null);
-  const userInfo = JSON.parse(localStorage.getItem("user"));
+  const [modalshow, setmodalshow] = useState(false);
+  const [isEdit, setisEdit] = useState(false);
+  const [myname, setMyName] = useState(useRef.current.name);
+
+  const [image, setImage] = useState("");
+  // const [url, setUrl] = useState("");
+
   useEffect(() => {
     fetch("http://localhost:5000/mypost", {
       headers: {
@@ -22,6 +31,47 @@ export default function Profile() {
         setData(result.reverse());
       });
   }, []);
+
+  useEffect(()=>{
+    const data = new FormData();
+    data.append("file", image); // file nomi
+    data.append("upload_preset", "farhodjon"); //
+    data.append("cloud_name", "deusujhz4"); //
+
+    //base url ga image/upload ni qo'shib qo'ydim
+    fetch("https://api.cloudinary.com/v1_1/deusujhz4/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        fetch("http://localhost:5000/updatepic", {
+          method: "put",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Farhod " + localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify({
+            pic: data.url
+          })
+        }).then((response)=> response.json()).then(
+          result => {
+            console.log(result);
+            localStorage.setItem("user",
+            JSON.stringify({...useRef.current, pic: result.pic})) //? result.url : useRef.current.pic
+            useRef.current = JSON.parse(localStorage.getItem("user"));
+            
+            dispatch({type: "UPDATEPIC", payload: result.pic})
+          } 
+        ).catch(err =>{
+          console.log(err);
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      //eslint-disable-next-line
+  }, [image])
 
   const userPosts = () => {
     if (data.length) {
@@ -66,6 +116,20 @@ export default function Profile() {
       ];
     }
   };
+
+  const updatePhoto = ()=>{
+      setmodalshow(false)
+      toast.success("Saved successfully")
+  }
+  const setProfile = ()=>{
+            localStorage.setItem("user",
+            JSON.stringify({...useRef.current, name: myname})) //? result.url : useRef.current.pic
+            useRef.current = JSON.parse(localStorage.getItem("user"));
+            
+            dispatch({type: "UPDATENAME", payload: myname})
+            setisEdit(false)
+            toast.success("Saved successfully")
+  }
   return (
     <>
       {data ? (<section className="h-100 gradient-custom-2">
@@ -75,20 +139,31 @@ export default function Profile() {
             <div className="card border border-2 shadow">
               <div className="rounded-top bg-dark text-white d-flex flex-row position-relative">
                 <div className="ms-4 mt-3 d-flex flex-column">
-                  <img
+                <div class="containers">
+                  <img src={useRef.current.pic ? useRef.current.pic : "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"} alt="Avatar" class="images img-fluid img-thumbnail mt-5 mb-2"/>
+                  <div class="middles">
+                    <button 
+                    onClick={()=>{setmodalshow(true)}}
+                    class="btn btn-primary texts"><MdAddPhotoAlternate/>
+                    </button>
+                  </div>
+                </div>
+
+                  {/* <img
                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                     alt="Generic placeholder"
                     className="img-fluid img-thumbnail mt-5 mb-2"
-                  ></img>
+                  ></img> */}
                   <button
                     type="button"
+                    onClick={()=>{setisEdit(true)}}
                     className="btn btn-secondary btn-floating myEditBtn"
                   >
                     <i className="bi bi-gear"></i>
                   </button>
                 </div>
                 <div className="ms-3 mb-130">
-                  <h5>{userInfo.name}</h5>
+                  <h5>{useRef.current.name}</h5>
                   <p>New York</p>
                 </div>
               </div>
@@ -99,12 +174,16 @@ export default function Profile() {
                     <p className="small text-muted mb-0">Photos</p>
                   </div>
                   <div className="px-3">
-                    <p className="mb-1 h5">{userInfo.followers.length ? userInfo.followers.length : 0}</p>
+                    <Link to="/followerspost">
+                    <p className="mb-1 h5">{useRef.current.followers.length ? useRef.current.followers.length : 0}</p>
                     <p className="small text-muted mb-0">Followers</p>
+                    </Link>
                   </div>
                   <div>
-                    <p className="mb-1 h5">{userInfo.following.length ? userInfo.following.length : 0}</p>
+                    <Link to="/followingpost">
+                    <p className="mb-1 h5">{useRef.current.following.length ? useRef.current.following.length : 0}</p>
                     <p className="small text-muted mb-0">Following</p>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -127,6 +206,77 @@ export default function Profile() {
             </div>
           </div>
         </div>
+        {
+          isEdit ? 
+          <div className="myModal"
+          onClick={()=>{setisEdit(false)}}
+          >
+          <div className="modal__content bg-dark p-3"
+          onClick={(e)=>{e.stopPropagation()}}
+          >
+                <div className="modalHeader">
+                  <span className="text-white">Settings</span>
+                  <MdClose  className="closeBtn" onClick={()=>{setisEdit(false)}}/>
+                </div>
+                <div className="modalCenter">
+                <div class="mb-3 mt-3">
+                  <input 
+                    class="form-control" 
+                    type="file" 
+                    id="formFile"
+                    onChange={(e)=>{
+                      setImage(e.target.files[0]);
+                      }} />
+                     <input type="text" class="form-control mt-3" value={myname} onChange={
+                      (e)=>{setMyName(e.target.value)}
+                     }/> 
+                </div>
+                </div>
+                <div className="modalFooter">
+                  <button className="btn btn-primary"
+                  onClick={()=>{setProfile()}}
+                  >
+                    Save
+                  </button>
+                </div>
+          </div>
+        </div>
+        : null
+        }
+        {
+          modalshow ? 
+          <div className="myModal"
+          onClick={()=>{setmodalshow(false)}}
+          >
+          <div className="modal__content bg-dark p-3"
+          onClick={(e)=>{e.stopPropagation()}}
+          >
+                <div className="modalHeader">
+                  <span className="text-white">Upload your avatar</span>
+                  <MdClose  className="closeBtn" onClick={()=>{setmodalshow(false)}}/>
+                </div>
+                <div className="modalCenter">
+                <div class="mb-3 mt-3">
+                  <input 
+                    class="form-control" 
+                    type="file" 
+                    id="formFile"
+                    onChange={(e)=>{
+                      setImage(e.target.files[0]);
+                      }} />
+                </div>
+                </div>
+                <div className="modalFooter">
+                  <button className="btn btn-primary"
+                  onClick={()=>{updatePhoto()}}
+                  >
+                    Save
+                  </button>
+                </div>
+          </div>
+        </div>
+        : null
+        }
       </div>
     </section>) : 
     <Loader />}

@@ -117,7 +117,7 @@ export default function UserProfile() {
                       <img
                         src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                         alt="Generic placeholder"
-                        className="img-fluid img-thumbnail mt-5 mb-2 userProfileImg"
+                        className="images img-fluid img-thumbnail mt-5 mb-2 userProfileImg"
                       ></img>
                       {showFollow ? (
                         <button

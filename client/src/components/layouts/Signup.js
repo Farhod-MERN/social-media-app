@@ -45,9 +45,9 @@ export default function Signup() {
             <div className="col-12 col-md-8 col-lg-6 col-xl-5">
               <div className="card bg-dark text-white">
                 <div className="card-body p-5 text-center">
-                  <div className="mb-md-5 mt-md-4">
+                  <div className="mb-1">
                     <h2 className="fw-bold mb-2 text-uppercase">SIGN UP</h2>
-                    <p className="text-white-50 mb-5">
+                    <p className="text-white-50 mb-4">
                       Please register to join our family 💖
                     </p>
 
@@ -111,7 +111,7 @@ export default function Signup() {
                     </button>
                   </div>
 
-                  <div>
+                  <div className='mt-4'>
                     <p className="mb-0">
                       Already have account{" "}
                       <Link to="/signin" className="text-white-50 fw-bold">
