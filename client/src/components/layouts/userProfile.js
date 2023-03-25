@@ -61,8 +61,8 @@ export default function UserProfile() {
           };
         });
         setShowFollow(false)
-        toast.success("you start following this user");
       });
+      toast.success("you start following this user");
   };
 
   const unFollowUser = () => {
@@ -101,8 +101,8 @@ export default function UserProfile() {
           };
         });
         setShowFollow(true)
-        toast.warning("you stop following this user");
       });
+      toast.warning("you stop following this user");
   };
   return (
     <>

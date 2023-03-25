@@ -116,10 +116,10 @@ router.put("/comments", login, (req, res) => {
 });
 // exec() - bu mongoose metodi hisoblanadi , va undan oldingi vazifalarni tekshiradi ekseqiud
 
-router.delete("/deletepost/:postId", login , (req, res) => {
+router.delete("/deletepost/:postId", login, (req, res) => {
   Post.findOne({ _id: req.params.postId })
-  .populate("comments.postedBy", "name _id")
-  .populate("postedBy")
+    .populate("comments.postedBy", "name _id")
+    .populate("postedBy")
     .exec((err, post) => {
       if (err || !post) {
         return res.status(422).json({ error: err });
@@ -137,4 +137,14 @@ router.delete("/deletepost/:postId", login , (req, res) => {
     });
 });
 
+router.get("/getsubspost", login, (req, res) => {
+  //posttedBy ni followingni ichidan olamiz 
+  Post.find({ postedBy: { $in: req.user.following } })
+  .populate("postedBy")
+  .populate("comments.postedBy")
+  .then(posts => res.json({posts}))
+  .catch(err => {
+   return console.log(err);
+  })
+});
 module.exports = router;
