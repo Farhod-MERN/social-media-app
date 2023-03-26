@@ -27,7 +27,7 @@ router.post("/signup", (req, res) => {
       }
 
       bcrypt.hash(password, 10).then((hashPass) => {
-        const user = User.create({ name, password: hashPass, email });
+        const user = User.create({ name, password: hashPass, email , followers: [], following: [] });
       });
     })
     .then((user) => {

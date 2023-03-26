@@ -11,9 +11,12 @@ import { useContext } from "react";
 export default function UserProfile() {
   const { id } = useParams();
   // 640efddd6c599e64b53cdfc8
-  const [data, setData] = useState(null); //datada userni malumotlari turadi {posts: [], user: {}}
+  const [data, setData] = useState(null);
+  useEffect(()=>{
+    
+  }) //datada userni malumotlari turadi {posts: [], user: {}}
   const { state, dispatch } = useContext(UserContext);
-  const [showFollow, setShowFollow] = useState(state.following ? !state.following.includes(id) : true);
+  const [showFollow, setShowFollow] = useState(state ? !state.following.includes(id) : true);
 
   useEffect(() => {
     fetch(`http://localhost:5000/user/${id}`, {
@@ -115,7 +118,7 @@ export default function UserProfile() {
                   <div className="rounded-top bg-dark text-white d-flex flex-row position-relative">
                     <div className="ms-4 mt-3 d-flex flex-column">
                       <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                        src={data.user.pic}
                         alt="Generic placeholder"
                         className="images img-fluid img-thumbnail mt-5 mb-2 userProfileImg"
                       ></img>

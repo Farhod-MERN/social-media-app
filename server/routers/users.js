@@ -93,4 +93,11 @@ router.put("/updatename",loginMiddleware, (req, res)=>{
   })
 })
 
+router.post("/searchuser", (req, res)=>{
+  const userSearchPanel = new RegExp("^" + req.body.query)
+  User.find({email: {$regex: userSearchPanel}})
+  .select("_id name pic email")
+  .then((user) => res.json({ user }))
+  .catch(e => console.log(e))
+})
 module.exports = router;

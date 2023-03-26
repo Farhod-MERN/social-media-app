@@ -138,11 +138,13 @@ export default function SubsUserPost() {
 
   return (
     <div className="row container mx-auto mt-2">
-      {data ? (
         <>
-          <h4 className="col-12 text-center mt-2">
+          {data && data.length ? <h4 className="col-12 text-center mt-2">
             These users are following you
-          </h4>
+          </h4> : <h4 className="col-12 text-center mt-2">
+            No Users
+          </h4>}
+          
           <div className="col-md-8 px-md-5 px-lg-5">
             <main>
               <div className="">
@@ -400,28 +402,9 @@ export default function SubsUserPost() {
             </main>
           </div>
           <div className="col-md-4 border border-2 rounded mt-3 mt-3 mb-2">
-            Users List
+          {data && data.length ? <span>Users List</span> : <span>No Users</span>}
           </div>
         </>
-      ) : (
-        <section className="page_404">
-          <div className="w-100">
-            <div className="row">
-              <div className="text-center">
-                <div className="col-sm-offset-1 text-center">
-                  <div className="four_zero_four_bg">
-                    <h5 className="text-center ">NO Followers</h5>
-                  </div>
-
-                  <div className="contant_box_404">
-                    <p>There aren't any followers</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
     </div>
   );
 }

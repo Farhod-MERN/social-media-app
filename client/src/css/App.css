@@ -1,4 +1,6 @@
-
+.modal-backdrop{
+    z-index: 1;
+}
 @media (max-width:600px) {
     .myMenues{
         border: 2px solid greenyellow;
