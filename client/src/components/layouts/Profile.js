@@ -21,7 +21,7 @@ export default function Profile() {
   // const [url, setUrl] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/mypost", {
+    fetch("https://socialgram-farhod.onrender.com/mypost", {
       headers: {
         Authorization: "Farhod " + localStorage.getItem("jwt"),
       },
@@ -45,7 +45,7 @@ export default function Profile() {
     })
       .then((res) => res.json())
       .then((data) => {
-        fetch("http://localhost:5000/updatepic", {
+        fetch("https://socialgram-farhod.onrender.com/updatepic", {
           method: "put",
           headers: {
             "Content-Type": "application/json",
@@ -122,7 +122,7 @@ export default function Profile() {
       toast.success("Saved successfully")
   }
   const setProfile = ()=>{
-            fetch("http://localhost:5000/updatename", {
+            fetch("https://socialgram-farhod.onrender.com/updatename", {
               method: "put",
               headers: {
                 "Content-Type": "application/json",

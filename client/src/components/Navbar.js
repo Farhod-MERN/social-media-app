@@ -29,7 +29,7 @@ export default function Navbar() {
 
   const serachUsers = (query)=>{
     setSearch(query)
-    query ? fetch("http://localhost:5000/searchuser", {
+    query ? fetch("https://socialgram-farhod.onrender.com/searchuser", {
       method: "post",
       headers:{
         "Content-Type": "application/json"

@@ -19,7 +19,7 @@ export default function UserProfile() {
   const [showFollow, setShowFollow] = useState(state ? !state.following.includes(id) : true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/user/${id}`, {
+    fetch(`https://socialgram-farhod.onrender.com/user/${id}`, {
       headers: {
         Authorization: "Farhod " + localStorage.getItem("jwt"),
       },
@@ -31,7 +31,7 @@ export default function UserProfile() {
   });
 
   const followUser = () => {
-    fetch("http://localhost:5000/follow", {
+    fetch("https://socialgram-farhod.onrender.com/follow", {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export default function UserProfile() {
   };
 
   const unFollowUser = () => {
-    fetch("http://localhost:5000/unfollow", {
+    fetch("https://socialgram-farhod.onrender.com/unfollow", {
       method: "put",
       headers: {
         "Content-Type": "application/json",

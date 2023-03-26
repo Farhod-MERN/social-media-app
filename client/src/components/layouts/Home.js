@@ -18,7 +18,7 @@ export default function Home() {
   const userInfo = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    fetch("http://localhost:5000/allpost", {
+    fetch("https://socialgram-farhod.onrender.com/allpost", {
       headers: {
         Authorization: "Farhod " + localStorage.getItem("jwt"),
       },
@@ -34,7 +34,7 @@ export default function Home() {
   }, []);
 
   const likePost = (id) => {
-    fetch("http://localhost:5000/like", {
+    fetch("https://socialgram-farhod.onrender.com/like", {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export default function Home() {
   };
 
   const unLikePost = (id) => {
-    fetch("http://localhost:5000/unlike", {
+    fetch("https://socialgram-farhod.onrender.com/unlike", {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export default function Home() {
   };
 
   const commentPost = (text, postedBy) => {
-    fetch("http://localhost:5000/comments", {
+    fetch("https://socialgram-farhod.onrender.com/comments", {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +120,7 @@ export default function Home() {
   };
 
   const deletePost = (postId) => {
-    fetch(`http://localhost:5000/deletepost/${postId}`, {
+    fetch(`https://socialgram-farhod.onrender.com/deletepost/${postId}`, {
       method: "delete",
       headers: {
         Authorization: "Farhod " + localStorage.getItem("jwt"),

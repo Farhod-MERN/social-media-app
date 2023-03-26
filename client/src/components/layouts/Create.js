@@ -10,7 +10,7 @@ export default function Create() {
 
   useEffect(()=>{
     if(url){
-      fetch("http://localhost:5000/createpost",{
+      fetch("https://socialgram-farhod.onrender.com/createpost",{
       method: "post",
       headers: {
         "Content-Type":"application/json",

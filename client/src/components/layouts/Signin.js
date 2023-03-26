@@ -24,7 +24,7 @@ export default function Signin() {
       return;
     }
 
-    fetch("http://localhost:5000/signin", {
+    fetch("https://socialgram-farhod.onrender.com/signin", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

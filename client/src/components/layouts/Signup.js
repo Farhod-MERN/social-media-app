@@ -17,7 +17,7 @@ export default function Signup() {
      return
     }
 
-    fetch("http://localhost:5000/signup", {
+    fetch("https://socialgram-farhod.onrender.com/signup", {
       method: "post",
       headers:{
         "Content-Type": "application/json"
