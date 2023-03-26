@@ -2,10 +2,10 @@ const express = require("express")
 const mongoose = require("mongoose")
 require("./models/user")
 require("./models/post")
+require('dotenv').config()
 
 const app = express()
-const {MONGO_URI} = require("./keys")
-const PORT = 5000
+const PORT =process.env.PORT || 5000
 
 const cors=require("cors");
 const corsOptions ={
@@ -23,7 +23,7 @@ app.use(require("./routers/users"))
 
 
 mongoose.set('strictQuery', false);
-mongoose.connect(MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
 
 mongoose.connection.on("connected", ()=>{
     console.log("MongoDB is connected");
