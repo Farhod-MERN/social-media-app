@@ -1,0 +1,54 @@
+.expImg{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  border: 1px solid grey;
+  border-radius: 6px;
+}
+.myCol{
+  width: 250px !important;
+  height: 250px !important;
+  margin-bottom: 10px !important;
+}
+.myHoverImage{
+  width: 100% !important;
+}
+.containerss {
+  position: relative;
+  width: 50%;
+}
+
+.imagess {
+  opacity: 1;
+  display: block;
+  width: 250px;
+  height: 250px;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middless {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.containerss:hover .imagess {
+  opacity: 0.3;
+}
+
+.containerss:hover .middless {
+  opacity: 1;
+}
+
+.textss {
+  background-color: #3b3d3c;
+  color: white !important;
+  font-size: 16px;
+  padding: 16px 32px;
+}

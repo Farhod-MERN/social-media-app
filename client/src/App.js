@@ -1,7 +1,7 @@
 import "./css/App.css";
 import { createContext, useReducer, useEffect, useContext } from "react";
 import { reducer, initialStata } from "./reducers/userReducer";
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./components/layouts/Home";
@@ -14,11 +14,12 @@ import Chat from "./components/layouts/Chat";
 import UserProfile from "./components/layouts/userProfile";
 import SubsUserPost from "./components/layouts/SubsUserPost";
 import FollowersPosts from "./components/layouts/FollowersPosts";
+import Explorer from "./components/layouts/Explorer";
 
 export const UserContext = createContext();
 
 const Routering = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   //eslint-disable-next-line
   const {state, dispatch} = useContext(UserContext)
   useEffect(()=>{
@@ -26,41 +27,24 @@ const Routering = () => {
       if(user){
         dispatch({type: "USER", payload: user}) //bu state ga userni saqlab qo'yadi
       }else{
-        history.push("/signin")
+        navigate("/signin");
       }
       //eslint-disable-next-line
   },[])
 
   return (
-    <Switch>
-      <Route exact path="/">
-        <Home />
-      </Route>
-      <Route path="/signin">
-        <Signin />
-      </Route>
-      <Route path="/signup">
-        <Signup />
-      </Route>
-      <Route path="/profile">
-        <Profile />
-      </Route>
-      <Route path="/create">
-        <Create />
-      </Route>
-      <Route path="/chat">
-        <Chat />
-      </Route>
-      <Route path="/user/:id">
-        <UserProfile />
-      </Route>
-      <Route path="/followingpost">
-        <SubsUserPost />
-      </Route>
-      <Route path="/followerspost">
-        <FollowersPosts />
-      </Route>
-    </Switch>
+    <Routes>
+      <Route exact path="/" element={<Home />} />
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/allpost" element={<Explorer />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/create" element={<Create />} />
+      <Route path="/chat" element={<Chat />} />
+      <Route path="/user/:id" element={<UserProfile />} />
+      <Route path="/followingpost" element={<SubsUserPost />} />
+      <Route path="/followerspost" element={<FollowersPosts />} />
+    </Routes>
   );
 };
 

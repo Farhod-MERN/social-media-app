@@ -535,11 +535,11 @@ export default function Home() {
               <ul className="ml-0 pl-1 mt-1 list-unstyled">
                 <li>
                   <p className="ml-3 text-dark mb-0 mt-1">
-                    <strong>{userInfo.name}</strong>
+                    <strong>{userInfo ? userInfo.name : "name"}</strong>
                   </p>
                 </li>
                 <li>
-                  <span className="ml-3 text-dark">{userInfo.email}</span>
+                  <span className="ml-3 text-dark"> {userInfo ?  userInfo.email : "email" }</span>
                 </li>
               </ul>
             </div>

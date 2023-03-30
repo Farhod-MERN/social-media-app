@@ -2,13 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from "react";
 import {toast} from "react-toastify"
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const postData = ()=>{
 
@@ -32,7 +32,7 @@ export default function Signup() {
         toast.warning(data.error);
       }else{
         toast.success(data.msg);
-        history.push("/signin")
+        navigate("/signin")
       }
     })
   }

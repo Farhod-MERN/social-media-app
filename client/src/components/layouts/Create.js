@@ -1,12 +1,12 @@
 import React, { useState, useEffect} from "react";
 import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Create() {
   const [comment, setComment] = useState("");
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
-  const history = useHistory()
+  const navigate = useNavigate()
 
   useEffect(()=>{
     if(url){
@@ -22,7 +22,7 @@ export default function Create() {
         toast.warning(data.error);
       }else{
         toast.success("Added succesfully");
-        history.push("/")
+        navigate("/")
       }
     })
     }

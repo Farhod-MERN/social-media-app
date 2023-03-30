@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ImHome } from "react-icons/im";
 import { MdExplore, MdOutlineAddCircle } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 export default function Navbar() {
   //eslint-disable-next-line
   const { state, dispatch } = useContext(UserContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [userFounded, setUserFounded] = useState([]);
   // const serchPanel = useRef(null)
@@ -19,7 +19,7 @@ export default function Navbar() {
   const logOut = () => {
     localStorage.clear();
     dispatch({ type: "CLEAR" });
-    history.push("/signin");
+    navigate("/signin");
     toast.success("Log out successfully");
   };
 
@@ -176,7 +176,8 @@ export default function Navbar() {
                 src={state ? state.pic : "https://cdn-icons-png.flaticon.com/512/219/219983.png"}
                 className="rounded-circle navProfile"
                 height="25"
-                style={{ marginTop: "3px" }}
+                width="25"
+                style={{ marginTop: "3px", objectFit: "cover" }}
                 alt="Black and White Portrait of a Man"
                 loading="lazy"
               />

@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import {UserContext} from "../../App"
 
 export default function Signin() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   //eslint-disable-next-line
   const {dispatch, state} = useContext(UserContext)
@@ -49,7 +49,7 @@ export default function Signin() {
           dispatch({type: "USER", payload: data.user})
 
           toast.success("Log in successfully");
-          history.push("/");
+          navigate("/");
         }
       });
   };

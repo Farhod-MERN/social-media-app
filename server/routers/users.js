@@ -22,6 +22,12 @@ router.get("/user/:id", loginMiddleware, (req, res) => {
     });
 });
 
+router.get("/allusers",(req, res)=>{
+  User.find().limit(10).then(result=>{
+    return res.json(result)
+  })
+})
+
 router.put("/follow", loginMiddleware, (req, res) => {
   //mongoose metodi 4 ta param oladi 3-opshins 4- callback
   User.findByIdAndUpdate(
